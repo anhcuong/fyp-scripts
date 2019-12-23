@@ -1,0 +1,5 @@
+*.pyc
+raw_videos/
+raw_frames/
+heatmaps/
+op_processing/
