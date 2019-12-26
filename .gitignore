@@ -3,3 +3,9 @@ raw_videos/
 raw_frames/
 heatmaps/
 op_processing/
+models/
+subclip_videos/
+*temp-audio.m4a*
+.venv
+logs/
+
