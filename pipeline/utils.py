@@ -42,15 +42,25 @@ def extract_frames_from_stream():
 
 
 @timeit
-def generate_heatmap_with_openpose(image_dir):
+def generate_heatmap_with_openpose(image_dir, with_keypoints=False):
     print('Generate heatmap with openpose')
-    cmd = '{openpose} --image_dir {image_dir} --model_folder {openpose_model_dir} --write_images {heatmap_dir} --disable_blending True --net_resolution "-1x480" --alpha_pose 1 --alpha_heatmap 1 --part_to_show 1 -log_dir {log_location} -display 0'.format(
-        image_dir=image_dir,
-        openpose=openpose,
-        log_location=log_folder,
-        heatmap_dir=heatmap_folder,
-        openpose_model_dir=openpose_model_folder,
-    )
+    if with_keypoints:
+        cmd = '{openpose} --image_dir {image_dir} --model_folder {openpose_model_dir} --write_json {keypoint_dir} --write_images {heatmap_dir} --disable_blending True --net_resolution "-1x480" --alpha_pose 1 --alpha_heatmap 1 --part_to_show 1 -log_dir {log_location} -display 0'.format(
+            image_dir=image_dir,
+            openpose=openpose,
+            log_location=log_folder,
+            heatmap_dir=heatmap_folder,
+            keypoint_dir=keypoint_folder,
+            openpose_model_dir=openpose_model_folder,
+        )
+    else:
+        cmd = '{openpose} --image_dir {image_dir} --model_folder {openpose_model_dir} --write_images {heatmap_dir} --disable_blending True --net_resolution "-1x480" --alpha_pose 1 --alpha_heatmap 1 --part_to_show 1 -log_dir {log_location} -display 0'.format(
+            image_dir=image_dir,
+            openpose=openpose,
+            log_location=log_folder,
+            heatmap_dir=heatmap_folder,
+            openpose_model_dir=openpose_model_folder,
+        )
     run_command(cmd)
 
 

@@ -40,7 +40,12 @@ cd pipeline/
 python cli.py copy_raw_processings
 python cli.py extract_frames_from_stream
 python cli.py generate_heatmap_realtime
-python cli.py predict_realtime
+# Or with keypoints
+python cli.py generate_heatmap_with_keypoints_realtime
+# Predict fighting and falling
+python cli.py predict_fighting_falling_realtime
+# Predict crowding
+python cli.py predict_crowding_realtime
 ```
 
 - Reset workspace

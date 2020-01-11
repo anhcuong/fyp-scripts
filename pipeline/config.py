@@ -17,6 +17,9 @@ openpose_model_folder = os.getenv('OPENPOSE_MODEL_FOLDER', 'C:/Users/Frank/works
 cnn_model_location = os.getenv('CNN_MODEL_LOCATION', os.path.join(cur_dir, 'models', 'hmnn_full_best_weights.hdf5'))
 cnn_frames_per_prediction = 5
 
+# Crowding
+crowding_frames_per_prediction = 1
+
 # Input/Output folder
 raw_video_folder = os.getenv('RAW_VIDEO_FOLDER', os.path.join(cur_dir, 'raw_videos'))
 subclip_video_folder = os.getenv('SUBCLIP_VIDEO_FOLDER', os.path.join(cur_dir, 'subclip_videos'))
