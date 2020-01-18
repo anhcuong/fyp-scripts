@@ -14,13 +14,10 @@ import matplotlib.pyplot as plt
 
 from config import cnn_model_location, crowd_folder
 
-
-
-tf_config =  tf.ConfigProto(log_device_placement=True)
+tf_config =  tf.ConfigProto()
 tf_config.gpu_options.allow_growth = True
 session = tf.Session(config=tf_config)
 set_session(session)
-
 
 print("GPU available: {}".format(tf.test.is_gpu_available()))
 
