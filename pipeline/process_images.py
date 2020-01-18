@@ -71,6 +71,7 @@ def on_created_custom(event):
     """
 
     folder_updated = event.src_path.split('\\')[1]
+    print(folder_updated)
 
     if folder_updated not in [HM_FOLDER, KP_FOLDER]:
         return
