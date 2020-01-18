@@ -9,6 +9,7 @@ import cv2
 from keras.models import load_model
 from keras.backend.tensorflow_backend import set_session
 from sklearn.metrics import roc_auc_score
+import matplotlib.pyplot as plt
 
 from config import cnn_model_location, crowd_folder
 
