@@ -72,8 +72,7 @@ def on_created_custom(event):
 
     folder_updated = event.src_path.split('\\')[1]
 
-    if folder_updated == TARGET_FOLDER:
-
+    if folder_updated not in [HM_FOLDER, KP_FOLDER]:
         print('ignoring file update - hhb folder')
         return
 

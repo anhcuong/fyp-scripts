@@ -78,8 +78,8 @@ def generate_keypoints_realtime():
         time.sleep(sleep_time)
 
 
-def generate_heatmap_batch():
-    generate_heatmap_with_openpose(raw_frame_folder)
+def generate_heatmap_batch(with_keypoints):
+    generate_heatmap_with_openpose(raw_frame_folder, with_keypoints)
 
 
 def predict_in_batch_with_cnn(videos):
@@ -100,7 +100,7 @@ def predict_in_batch_with_cnn(videos):
 def run_batch_pipeline():
     videos = raw_video_to_subclip()
     subclip_to_frame()
-    generate_heatmap_batch()
+    generate_heatmap_batch(with_keypoints=True)
     predict_in_batch_with_cnn(videos)
 
 
