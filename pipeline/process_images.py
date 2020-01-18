@@ -75,7 +75,7 @@ def on_created_custom(event):
         return
     folder_check = HM_FOLDER if folder_updated == KP_FOLDER else KP_FOLDER
     file_check = os.path.join(folder_check, file_name.replace(
-        '_rendered', '_keypoints').replace('_keypoints', '_rendered'))
+        '_rendered.png', '_keypoints.json').replace('_keypoints.json', '_rendered.png'))
     print(file_check)
     while(not os.path.isfile(file_check)):
         time.sleep(0.5)
