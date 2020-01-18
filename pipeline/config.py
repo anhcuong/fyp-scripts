@@ -29,6 +29,7 @@ openpose_processing_folder = os.getenv('OPENPOSE_PROCESSING_FOLDER', os.path.joi
 heatmap_folder = os.getenv('HEATMAP_FOLDER', os.path.join(image_dir, 'heatmaps'))
 keypoint_folder = os.getenv('KEYPOINT_FOLDER', os.path.join(image_dir, 'keypoints'))
 stack_frame_folder = os.getenv('STACKED_FRAME_FOLDER', os.path.join(image_dir, 'stacked_frames'))
+crowd_folder = os.getenv('CROWD_OUTPUT_FOLDER', os.path.join(image_dir, 'crowd_output'))
 log_folder = os.getenv('LOG_FOLDER', os.path.join(cur_dir, 'logs'))
 frame_prefix = 'raw_'
 
@@ -51,6 +52,7 @@ subclip_duration = 5
 for folder in [
         image_dir, subclip_video_folder, raw_frame_folder,
         openpose_processing_folder, heatmap_folder,
-        keypoint_folder, log_folder, cnn_model_location, stack_frame_folder]:
+        keypoint_folder, log_folder, cnn_model_location, stack_frame_folder,
+        crowd_folder]:
     if not os.path.exists(folder):
         os.mkdir(folder)

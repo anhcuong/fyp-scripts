@@ -134,7 +134,7 @@ def predict_crowding_realtime():
             while(not os.path.isfile(f)):
                 time.sleep(sleep_time)
             rs = run_crowd_detection_model(f)
-            update_result(CROWD_FRAME_RS_PREFIX, i, rs)
+            # update_result(CROWD_FRAME_RS_PREFIX, i, rs)
         start_frame = end_frame
 
 
