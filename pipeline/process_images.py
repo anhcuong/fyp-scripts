@@ -69,18 +69,13 @@ def on_created_custom(event):
 
     Note : Raw folder is not tracked, as the images are populated much faster than KP and HM.
     """
-
-    folder_updated = event.src_path.split('\\')[1]
+    folder_updated, file_name = os.path.split(event.src_path)
     print(folder_updated)
+    print(file_name)
 
     if folder_updated not in [HM_FOLDER, KP_FOLDER]:
         return
-
     folder_check = HM_FOLDER if folder_updated == KP_FOLDER else KP_FOLDER
-
-    file_name = event.src_path.split('\\')[2]
-
-    print(file_name)
 
     new_frame_idx = re.match('[\w]*frame(?P<new_frame_idx>[0-9]{3})[\w]*',
         file_name).group('new_frame_idx')
