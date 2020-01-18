@@ -28,6 +28,7 @@ docker run -d -p 6379:6379 redis
 
 ```bash
 cd pipeline/
+python cli.py process_images
 python cli.py run_batch_pipeline
 ```
 
@@ -42,6 +43,8 @@ python cli.py extract_frames_from_stream
 python cli.py generate_heatmap_realtime
 # Or with keypoints
 python cli.py generate_heatmap_with_keypoints_realtime
+# Stack images
+python cli.py process_imagess
 # Predict fighting and falling
 python cli.py predict_fighting_falling_realtime
 # Predict crowding
@@ -49,7 +52,6 @@ python cli.py predict_crowding_realtime
 ```
 
 - Reset workspace
-
 
 ```bash
 cd pipeline/

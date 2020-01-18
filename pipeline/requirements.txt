@@ -96,3 +96,4 @@ Werkzeug==0.16.0
 widgetsnbextension==3.4.2
 win-unicode-console==0.5
 wrapt==1.11.2
+watchdog

@@ -7,12 +7,13 @@ import glob
 from config import (
     raw_frame_folder, openpose_processing_folder, fps,
     sleep_time, frame_prefix, rd, subclip_video_folder, heatmap_folder,
-    cnn_frames_per_prediction, keypoint_folder)
+    cnn_frames_per_prediction, keypoint_folder, stack_frame_folder)
 from utils import (
     extract_frames_from_stream, generate_heatmap_with_openpose,
     generate_keypoints_with_openpose, raw_video_to_subclip, subclip_to_frame,
-    pick_frames_for_prediction,)
+    pick_frames_for_prediction)
 from models import run_cnn_model, get_cnn_model, run_crowd_detection_model
+from process_images import observe_and_process
 
 
 FIGHTING_FALLING_FRAME_RS_PREFIX = 'fighting_falling_'
@@ -137,11 +138,16 @@ def predict_crowding_realtime():
         start_frame = end_frame
 
 
+def run_process_images():
+    observe_and_process()
+
+
 def reset():
     empty_folder(raw_frame_folder)
     empty_folder(heatmap_folder)
     empty_folder(keypoint_folder)
     empty_folder(subclip_video_folder)
+    empty_folder(stack_frame_folder)
 
 
 if __name__== "__main__":
@@ -160,6 +166,8 @@ if __name__== "__main__":
         predict_crowding_realtime()
     elif arg == 'run_batch_pipeline':
         run_batch_pipeline()
+    elif arg == 'process_images':
+        run_process_images()
     elif arg == 'reset':
         reset()
     else:

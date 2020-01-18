@@ -55,8 +55,6 @@ def run_cnn_model(frame_paths, model):
     img_seq = np.zeros(shape=(5,224,224,3))
     for i, path in enumerate(frame_paths):
         img = cv2.imread(path)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        img = cv2.resize(img, (224,224))
         img_seq[i] = img
     results = model.predict(np.expand_dims(img_seq, axis=0), batch_size=1)
     assert results.shape == (1,2), "Incorrect output shape, check model"
