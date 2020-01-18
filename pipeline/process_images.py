@@ -53,7 +53,7 @@ def resize_and_extract_hkb(raw_path, hm_path, kp_path, hkb_dir):
     stacked_3ch_img = np.dstack((hm_img, kp_img, bg_mask))
 
     dst_path = os.path.join(IMAGES_DIR, hkb_dir, output_filename)
-    print(f'Saving file to {dst_path}')
+    print('Saving file to {}'.format(dst_path))
     cv2.imwrite(dst_path, stacked_3ch_img)
 
     return
