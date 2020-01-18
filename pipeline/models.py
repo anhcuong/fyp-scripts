@@ -16,10 +16,10 @@ from config import cnn_model_location, crowd_folder
 
 
 
-tf_config =  tf.ConfigProto()
-tf_config.gpu_options.allow_growth = True
-session = tf.Session(config=tf_config)
-set_session(session)
+# tf_config =  tf.ConfigProto()
+# tf_config.gpu_options.allow_growth = True
+# session = tf.Session(config=tf_config)
+# set_session(session)
 
 
 def roc_auc_score_modified_multi_lab(y_true, y_pred):
