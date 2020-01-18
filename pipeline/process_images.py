@@ -70,34 +70,18 @@ def on_created_custom(event):
     Note : Raw folder is not tracked, as the images are populated much faster than KP and HM.
     """
     folder_updated, file_name = os.path.split(event.src_path)
-    print(folder_updated)
-    print(file_name)
 
     if folder_updated not in [HM_FOLDER, KP_FOLDER]:
         return
     folder_check = HM_FOLDER if folder_updated == KP_FOLDER else KP_FOLDER
-
-    new_frame_idx = re.match('[\w]*frame(?P<new_frame_idx>[0-9]{3})[\w]*',
-        file_name).group('new_frame_idx')
-
-    print(new_frame_idx)
-
-    print('Folder updated : {}\n'.format(folder_updated) +
-          'Folder to check : {}\n'.format(folder_check) +
-          'New File Frame ID : {new_frame_idx}\n'.format(new_frame_idx) +
-          'File Name : {file_name}'.format(file_name))
-
-    DEQUE[folder_updated].append(new_frame_idx)
-
-    if new_frame_idx in DEQUE[folder_check]:
-
-        print('Running processing function')
-
-        raw_path = os.path.join(RAW_FOLDER,file_name)
-        hm_path = os.path.join(HM_FOLDER,file_name)
-        kp_path = os.path.join(KP_FOLDER,file_name)
-        resize_and_extract_hkb(raw_path, hm_path, kp_path, TARGET_FOLDER)
-
+    file_check = os.path.join(folder_check, file_name.replace(
+        '_rendered', '_keypoints').replace('_keypoints', '_rendered'))
+    while(not os.path.isfile(file_check)):
+        time.sleep(0.5)
+    raw_path = os.path.join(RAW_FOLDER, file_name)
+    hm_path = os.path.join(HM_FOLDER, file_name)
+    kp_path = os.path.join(KP_FOLDER, file_name)
+    resize_and_extract_hkb(raw_path, hm_path, kp_path, TARGET_FOLDER)
     return
 
 def observe_and_process():

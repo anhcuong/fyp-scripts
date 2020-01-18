@@ -42,7 +42,8 @@ def auroc(y_true, y_pred):
 
 
 def get_cnn_model():
-    model = load_model(cnn_model_location, custom_objects={'auroc': auroc})
+    model = load_model(cnn_model_location)
+    # model = load_model(cnn_model_location, custom_objects={'auroc': auroc})
     return model
 
 
