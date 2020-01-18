@@ -34,9 +34,9 @@ def resize_and_extract_hkb(raw_path, hm_path, kp_path, hkb_dir):
     """
     print('resize!')
     output_filename = raw_path.split('\\')[-1] # to be updated
-    print(raw_img)
     print(output_filename)
-    raw_img = cv2.imread(raw_path,0)
+    raw_img = cv2.imread(raw_path, 0)
+    print(raw_img)
     raw_img = cv2.resize(raw_img, (224,224))
 
     hm_img = cv2.imread(hm_path,0)
