@@ -84,10 +84,10 @@ def on_created_custom(event):
     new_frame_idx = re.match('[\w]*frame(?P<new_frame_idx>[0-9]{3})[\w]*',
         file_name).group('new_frame_idx')
 
-    print(f'Folder updated : {folder_updated}\n'
-          f'Folder to check : {folder_check}\n'
-          f'New File Frame ID : {new_frame_idx}\n'
-          f'File Name : {file_name}')
+    print('Folder updated : {}\n'.format(folder_updated)
+          'Folder to check : {}\n'.format(folder_check)
+          'New File Frame ID : {new_frame_idx}\n'.format(new_frame_idx)
+          'File Name : {file_name}'.format(file_name))
 
     DEQUE[folder_updated].append(new_frame_idx)
 
