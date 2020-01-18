@@ -32,7 +32,7 @@ def resize_and_extract_hkb(raw_path, hm_path, kp_path, hkb_dir):
     Use raw image for background subtraction.
     Stack the images to get HKB representation.
     """
-
+    print('resize!')
     output_filename = raw_path.split('\\')[-1] # to be updated
 
     raw_img = cv2.imread(raw_path,0)
@@ -76,6 +76,7 @@ def on_created_custom(event):
     folder_check = HM_FOLDER if folder_updated == KP_FOLDER else KP_FOLDER
     file_check = os.path.join(folder_check, file_name.replace(
         '_rendered', '_keypoints').replace('_keypoints', '_rendered'))
+    print(file_check)
     while(not os.path.isfile(file_check)):
         time.sleep(0.5)
     raw_path = os.path.join(RAW_FOLDER, file_name)
