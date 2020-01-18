@@ -32,16 +32,12 @@ def resize_and_extract_hkb(raw_path, hm_path, kp_path, hkb_dir):
     Use raw image for background subtraction.
     Stack the images to get HKB representation.
     """
-    print('resize!')
     output_filename = raw_path.split('\\')[-1] # to be updated
-    print(output_filename)
-    raw_img = cv2.imread(raw_path, 0)
-    print(raw_img)
-    raw_img = cv2.resize(raw_img, (224,224))
+    # raw_img = cv2.imread(raw_path, 0)
+    raw_img = cv2.resize(raw_path, (224,224))
 
     hm_img = cv2.imread(hm_path,0)
     hm_img = cv2.resize(hm_img, (224,224))
-
 
     kp_img = cv2.imread(kp_path,0)
     kp_img = cv2.resize(kp_img, (224,224))
