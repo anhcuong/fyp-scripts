@@ -22,7 +22,7 @@ cnn_frames_per_prediction = 5
 crowding_frames_per_prediction = 1
 
 # Input/Output folder
-raw_video_folder = os.getenv('RAW_VIDEO_FOLDER', os.path.join(image_dir, 'raw_videos'))
+raw_video_folder = os.getenv('RAW_VIDEO_FOLDER', os.path.join(cur_dir, 'raw_videos'))
 subclip_video_folder = os.getenv('SUBCLIP_VIDEO_FOLDER', os.path.join(image_dir, 'subclip_videos'))
 raw_frame_folder = os.getenv('RAW_FRAME_FOLDER', os.path.join(image_dir, 'raw_frames'))
 openpose_processing_folder = os.getenv('OPENPOSE_PROCESSING_FOLDER', os.path.join(image_dir, 'op_processing'))
@@ -53,6 +53,6 @@ for folder in [
         image_dir, subclip_video_folder, raw_frame_folder,
         openpose_processing_folder, heatmap_folder,
         keypoint_folder, log_folder, cnn_model_location, stack_frame_folder,
-        crowd_folder]:
+        crowd_folder, raw_video_folder]:
     if not os.path.exists(folder):
         os.mkdir(folder)
