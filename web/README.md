@@ -3,6 +3,7 @@
 - Default url for the app is 127.0.0.1:8000
 
 ```bash
+pip install -r requirements.txt
 cd django_project/
 python manage.py runserver
 ```
