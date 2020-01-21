@@ -1,0 +1,294 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>FYP Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Your page description here" />
+  <meta name="author" content="" />
+
+  <!-- css -->
+  <link href="https://fonts.googleapis.com/css?family=Handlee|Open+Sans:300,400,600,700,800" rel="stylesheet">
+  <link href="{% static 'fyp/css/bootstrap.css' %}" rel="stylesheet" />
+  <link href="{% static 'fyp/css/bootstrap-responsive.css' %}" rel="stylesheet" />
+  <link href="{% static 'fyp/css/flexslider.css' %}" rel="stylesheet" />
+  <link href="{% static 'fyp/css/prettyPhoto.css' %}" rel="stylesheet" />
+  <link href="{% static 'fyp/css/camera.css' %}" rel="stylesheet" />
+  <link href="{% static 'fyp/css/jquery.bxslider.css' %}" rel="stylesheet" />
+  <link href="{% static 'fyp/css/style.css' %}" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'fyp/css/w3.css' %}">
+
+  <!-- Theme skin -->
+  <link href="{% static 'fyp/color/default.css' %}" rel="stylesheet" />
+
+  <!-- Fav and touch icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png" />
+  <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png" />
+  <!-- <link rel="shortcut icon" href="ico/favicon.png" /> -->
+
+  <!-- =======================================================
+    Theme Name: Eterna
+    Theme URL: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/
+    Author: BootstrapMade.com
+    Author URL: https://bootstrapmade.com
+  ======================================================= -->
+</head>
+
+<body>
+
+  <div id="wrapper">
+
+    <!-- start header -->
+    <header>
+      <div class="top">
+        <div class="container">
+          <div class="row">
+            <div class="span6">
+              <p class="topcontact"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row nomargin">
+          <div class="span2">
+            <div class="logo">
+              <a href="/"><p class="topcontact" style="font-weight: bold;">FYP Demo</p></a>
+            </div>
+          </div>
+          <div class="span5">
+            <div class="navbar navbar-static-top">
+              <div class="navigation">
+                <nav>
+                  <ul class="nav topnav">
+                    <li class="dropdown active">
+                      <a href="/"><i class="icon-home"></i> Home </a>
+                    </li>
+                    <li class="dropdown">
+                      <a href="/alertHistory">Alert History </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <!-- end navigation -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- end header -->
+    <!-- section frames -->
+	<section id="frames" style="margin-top:5px;">
+  {% block content1 %}
+ <!--  	<div style = "display:inline-block; width:49.5%;text-align:center; margin-bottom:5%;" id = "frame1">
+  	<img src="{% static 'fyp/img/default.png' %}" style="width: 90%; display:block;margin:auto;">
+  	<p class="topcontact" style="font-weight: bold; ">Raw Frames</p>
+  	</div>
+  	<div style = "display:inline-block; width:49.5%;text-align:center; margin-bottom:5%;" id = "frame2">
+  	<img src="{% static 'fyp/img/default.png' %}" alt="Raw frames" style="width: 90%; display:block;margin:auto;">
+  	<p class="topcontact" style="font-weight: bold;">Heatmaps</p>
+  	</div> -->
+  {% endblock %}
+
+	<div style="display: block; text-align:center; width: 100%;" id = "crowd_graph">
+	<img id = "crowd_count"src="{% static 'fyp/img/default.png' %}" alt="Raw frames" style="width: 70%; margin:auto;display: block;">
+	<p class="topcontact" style="font-weight: bold;">Crowd Count</p>
+	</div>
+	</section>
+	
+	<!-- end section frames -->
+	<!-- Alert div -->
+	<div id="id01" class="w3-modal" style="display:none;">
+    <div class="w3-modal-content w3-animate-top w3-card-4" style="width:40%">
+    <header class="w3-container w3-teal"> 
+      <h2 style='color: #c5c2d4;padding: 5px 5px;'>Event Detected</h2>
+    </header>
+    <div class="w3-content w3-display-container" style="padding: 10px 16px 5px 16px;text-align:center;">
+      <img id="alert_img1" class="mySlides" src="" style="width:100%">
+      <img id="alert_img2" class="mySlides" src="" style="width:100%">
+      <img id="alert_img3" class="mySlides" src="" style="width:100%">
+      <img id="alert_img4" class="mySlides" src="" style="width:100%">
+      <img id="alert_img5" class="mySlides" src="" style="width:100%">
+      <p id= "alert_eventType" style="margin:5px 0 0 0">Type: </p>
+      <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+      <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+    </div>
+    <footer class="w3-container w3-teal" >
+      <div style= "width:100%;display:block; text-align:center;">
+          <button type="button" class="btn btn-success alert-handler" value="True Alarm" onclick = "saveDiv(this.value)" style= "display: inline-block; font-size: 10px;margin:5px;" >True Alarm</button>
+          <button type="button" class="btn btn-danger alert-handler" value="False Alarm" onclick = "saveDiv(this.value)"  style= "display: inline-block; font-size: 10px;margin:5px;" >False Alarm</button>
+      </div>
+    </footer>
+  </div>
+	</div>
+	<!-- End Alert div -->
+    
+    <!-- /section featured -->
+
+    <section id="content">
+	 <div>
+        <div class="row">
+          <div class="span12">
+            <div class="solidline"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <footer style="
+    bottom: 0;
+    width: 100%;">
+    </footer>
+  </div>
+  <a href="#" class="scrollup"><i class="icon-angle-up icon-square icon-bglight icon-2x active"></i></a>
+
+  <!-- javascript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="{% static 'fyp/js/jquery.js' %}"></script>
+  <script src="{% static 'fyp/js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'fyp/js/bootstrap.js' %}"></script>
+
+  <script src="{% static 'fyp/js/modernizr.custom.js' %}"></script>
+  <script src="{% static 'fyp/js/toucheffects.js' %}"></script>
+  <script src="{% static 'fyp/js/google-code-prettify/prettify.js' %}"></script>
+  <script src="{% static 'fyp/js/jquery.bxslider.min.js' %}"></script>
+  <script src="{% static 'fyp/js/camera/camera.js' %}"></script>
+  <script src="{% static 'fyp/js/camera/setting.js' %}"></script>
+
+  <script src="{% static 'fyp/js/jquery.prettyPhoto.js' %}"></script>
+  <script src="{% static 'fyp/js/portfolio/jquery.quicksand.js' %}"></script>
+  <script src="{% static 'fyp/js/portfolio/setting.js' %}"></script>
+
+  <script src="{% static 'fyp/js/jquery.flexslider.js' %}"></script>
+  <script src="{% static 'fyp/js/animate.js' %}"></script>
+  <script src="{% static 'fyp/js/inview.js' %}"></script>
+
+  <!-- Template Custom JavaScript File -->
+  <script src="{% static 'fyp/js/custom.js' %}"></script>
+  <script src="{% static 'django_eventstream/eventsource.min.js' %}"></script>
+  <script src="{% static 'django_eventstream/reconnecting-eventsource.js' %}"></script>
+
+  <script type="text/javascript">
+    //basic settings
+    var raw_frame_format = '.jpg';
+    var heatmap_frame_format = '.png';
+    var crowd_count_format = '.png';
+
+
+
+
+    //Setup event stream channel for events
+    var pased_data;
+    var es = new ReconnectingEventSource('/events/');
+
+    es.addEventListener('message', function (e) {
+        
+        parsed_data = JSON.parse(e.data);
+        console.log(parsed_data);
+        document.getElementById('alert_img1').src = 'static/fyp/img/raw/' + parsed_data.snapshotURL1 +raw_frame_format;
+        document.getElementById('alert_img2').src = 'static/fyp/img/raw/' + parsed_data.snapshotURL2 +raw_frame_format;
+
+        document.getElementById('alert_img3').src = 'static/fyp/img/raw/' + parsed_data.snapshotURL3 +raw_frame_format;
+
+        document.getElementById('alert_img4').src = 'static/fyp/img/raw/' + parsed_data.snapshotURL4 +raw_frame_format;
+
+        document.getElementById('alert_img5').src = 'static/fyp/img/raw/' + parsed_data.snapshotURL5 +raw_frame_format;
+        document.getElementById("alert_eventType").innerHTML = parsed_data.eventType;
+
+        document.getElementById('id01').style.display='block';
+
+    }, false);
+
+    es.addEventListener('stream-reset', function (e) {
+        // ... client fell behind, reinitialize ...
+    }, false);
+
+    function hideElement(id) {
+      document.getElementById(id).style.display='none'
+    }
+
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    //Save alert and handling
+    function saveDiv(handled){
+      parsed_data.handled = handled;
+      console.log(parsed_data);
+      console.log(handled);
+      document.getElementById('id01').style.display='none';
+
+
+      $.ajax({
+        url : "/saveAlert",
+        type: 'POST',
+        data: parsed_data,
+        // beforeSend: function(xhr){xhr.setRequestHeader('X-CSRFToken', csrftoken);},
+        success: function(response){
+          console.log(response)
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+          console.log( errorThrown );
+        }   
+      });
+
+    }
+
+    //Setup event stream channels for crowd count graph
+    var es2 = new ReconnectingEventSource('/crowd/');
+
+    es2.addEventListener('message', function (e) {
+        parsed = JSON.parse(e.data);
+        console.log(parsed);
+        document.getElementById('crowd_count').src = 'static/fyp/img/crowd_graph/' + parsed.snapshotURL +crowd_count_format;
+
+    }, false);
+
+    es2.addEventListener('stream-reset', function (e) {
+        // ... client fell behind, reinitialize ...
+    }, false);
+
+    // Slider effect
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+      showDivs(slideIndex += n);
+    }
+
+    function showDivs(n) {
+      var i;
+      var x = document.getElementsByClassName("mySlides");
+      if (n > x.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = x.length}
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";  
+      }
+      x[slideIndex-1].style.display = "block";  
+    }
+  </script>
+  {% block script1 %} {% endblock %}
+
+</body>
+</html>

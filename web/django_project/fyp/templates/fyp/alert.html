@@ -1,0 +1,56 @@
+{% extends "fyp/base.html" %}
+{% load static %}
+{% block content2 %}
+  <div class="w3-modal-content w3-animate-top w3-card-4" style="width:40%">
+    <header class="w3-container w3-teal"> 
+      <h2 style='color: #c5c2d4;padding: 5px 5px;'>Event Detected</h2>
+    </header>
+    <div class="w3-content w3-display-container" style="padding: 10px 16px 5px 16px;text-align:center;">
+      <img id="alert_img1" class="mySlides" src="{% static 'fyp/img/raw/'|add:snapshotURL1|add:'.jpg' %}" style="width:100%">
+      <img id="alert_img2" class="mySlides" src="{% static 'fyp/img/raw/'|add:snapshotURL2|add:'.jpg' %}" style="width:100%">
+      <img id="alert_img3" class="mySlides" src="{% static 'fyp/img/raw/'|add:snapshotURL3|add:'.jpg' %}" style="width:100%">
+      <img id="alert_img4" class="mySlides" src="{% static 'fyp/img/raw/'|add:snapshotURL4|add:'.jpg' %}" style="width:100%">
+      <img id="alert_img5" class="mySlides" src="{% static 'fyp/img/raw/'|add:snapshotURL5|add:'.jpg' %}" style="width:100%">
+      <p style="margin:5px 0 0 0">Type: {{eventType}}</p>
+      <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+      <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+    </div>
+    <footer class="w3-container w3-teal" >
+      <div style= "width:100%;display:block; text-align:center;">
+          <button type="button" class="btn btn-success" style= "display: inline-block; font-size: 10px;margin:5px;" onclick="hideElement('id01')">True Alarm</button>
+          <button type="button" class="btn btn-danger" style= "display: inline-block; font-size: 10px;margin:5px;" onclick="hideElement('id01')">False Alarm</button>
+      </div>
+    </footer>
+  </div>
+{% endblock %}
+
+{% block script1 %}
+  <script>
+  // alert("Here!!");
+
+  var slideIndex = 1;
+  showDivs(slideIndex);
+
+  function plusDivs(n) {
+    showDivs(slideIndex += n);
+  }
+
+  function showDivs(n) {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    if (n > x.length) {slideIndex = 1}
+    if (n < 1) {slideIndex = x.length}
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";  
+    }
+    x[slideIndex-1].style.display = "block";  
+  }
+
+  document.getElementById('id01').style.display='block';
+
+  // hiding element based on elementId
+  function hideElement(id) {
+    document.getElementById(id).style.display='none'
+  }
+  </script>
+{% endblock %}

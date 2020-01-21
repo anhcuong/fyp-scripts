@@ -1,0 +1,36 @@
+{% extends "fyp/base.html" %}
+{% load static %}
+{% block content1 %}
+<div style = "display:inline-block; width:49.5%;text-align:center; margin-bottom:5%;" id = "frame1">
+  <img id = "raw_snapshot" src="{% static 'fyp/img/default.png' %}" style="width: 90%; display:block;margin:auto;">
+  <p class="topcontact" style="font-weight: bold; ">Raw Frames</p>
+</div>
+<div style = "display:inline-block; width:49.5%;text-align:center; margin-bottom:5%;" id = "frame2">
+  <img id = "heat_snapshot" src="{% static 'fyp/img/default.png' %}" alt="Raw frames" style="width: 90%; display:block;margin:auto;">
+  <p class="topcontact" style="font-weight: bold;">Heatmaps</p>
+</div>
+
+{% endblock content1 %}
+
+{% block script1 %}
+<script type="text/javascript">
+  //Set up event stream listener for live frames
+  var es1 = new ReconnectingEventSource('/frame/');
+
+  es1.addEventListener('message', function (e) {
+      parsed = JSON.parse(e.data);
+      console.log(parsed);
+      document.getElementById('raw_snapshot').src = 'static/fyp/img/raw/' + parsed.snapshotURL +'.jpg';
+      document.getElementById('heat_snapshot').src = 'static/fyp/img/heatmap/' + parsed.snapshotURL +'.png';
+
+  }, false);
+
+  es1.addEventListener('stream-reset', function (e) {
+      // ... client fell behind, reinitialize ...
+  }, false);
+
+</script>
+
+{% endblock script1 %}
+<script src="{% static 'django_eventstream/eventsource.min.js' %}"></script>
+<script src="{% static 'django_eventstream/reconnecting-eventsource.js' %}"></script>

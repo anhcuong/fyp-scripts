@@ -1,0 +1,239 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>FYP Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Your page description here" />
+  <meta name="author" content="" />
+
+  <!-- css -->
+  <link href="https://fonts.googleapis.com/css?family=Handlee|Open+Sans:300,400,600,700,800" rel="stylesheet">
+  <link href="{% static 'fyp/css/bootstrap.css' %}" rel="stylesheet" />
+  <link href="{% static 'fyp/css/bootstrap-responsive.css' %}" rel="stylesheet" />
+  <link href="{% static 'fyp/css/flexslider.css' %}" rel="stylesheet" />
+  <link href="{% static 'fyp/css/prettyPhoto.css' %}" rel="stylesheet" />
+  <link href="{% static 'fyp/css/camera.css' %}" rel="stylesheet" />
+  <link href="{% static 'fyp/css/jquery.bxslider.css' %}" rel="stylesheet" />
+  <link href="{% static 'fyp/css/style.css' %}" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'fyp/css/w3.css' %}">
+
+  <!-- Theme skin -->
+  <link href="{% static 'fyp/color/default.css' %}" rel="stylesheet" />
+  <style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+<!--   background-color: #dddddd; -->
+}
+.mySlides {display:none;}
+</style>
+
+  <!-- Fav and touch icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png" />
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="ico/apple-touch-icon-72-precomposed.png" />
+  <link rel="apple-touch-icon-precomposed" href="ico/apple-touch-icon-57-precomposed.png" />
+  <!-- <link rel="shortcut icon" href="ico/favicon.png" /> -->
+
+  <!-- =======================================================
+    Theme Name: Eterna
+    Theme URL: https://bootstrapmade.com/eterna-free-multipurpose-bootstrap-template/
+    Author: BootstrapMade.com
+    Author URL: https://bootstrapmade.com
+  ======================================================= -->
+</head>
+
+<body>
+
+  <div id="wrapper">
+
+    <!-- start header -->
+    <header>
+      <div class="top">
+        <div class="container">
+          <div class="row">
+            <div class="span6">
+              <p class="topcontact"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row nomargin">
+          <div class="span2">
+            <div class="logo">
+              <a href="/"><p class="topcontact" style="font-weight: bold;">FYP Demo</p></a>
+            </div>
+          </div>
+          <div class="span5">
+            <div class="navbar navbar-static-top">
+              <div class="navigation">
+                <nav>
+                  <ul class="nav topnav">
+                    <li class="dropdown active">
+                      <a href="/"><i class="icon-home"></i> Home </a>
+                    </li>
+                    <li class="dropdown">
+                      <a href="/alertHistory">Alert History </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+              <!-- end navigation -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- end header -->
+	  <section id="inner-headline">
+      <div class="container">
+        <div class="row">
+          <div class="span12">
+            <div class="inner-heading">
+
+            <table>
+              <tr>
+                <th>Event ID</th>
+            	  <th>Snapshot</th>
+                <th>Event Type</th>
+                <th>Timestamp</th>
+            	  <th>Handled</th>
+            	  <th></th>
+              </tr>
+              {% for alert in alerts%}
+                <tr>
+                  <th>{{ alert.id }}</th>
+                  <th><img src="{% static 'fyp/img/raw/'|add:alert.snapshotURL1|add:'.jpg' %}" width="50" height="60"></th>
+                  <th>{{ alert.eventType }}</th>
+                  <th>{{ alert.timestamp|date:"Y F d, G:i:s" }}</th>
+                  <th>{{ alert.handled }}</th>
+                  <th><img src="{% static 'fyp/img/icons/view_details.png' %}" width="50" height="60" onclick="display_details({{ alert.id }})" ></th>
+                </tr>
+              {% endfor%}
+             </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+	
+	<!-- end section frames -->
+	<!--slide show as alert-->
+	<div id="id02" class="w3-modal" style="display:none;">
+    <div class="w3-modal-content w3-animate-top w3-card-4" style="width:40%">
+      <div class="w3-content w3-display-container">
+	  <span onclick="document.getElementById('id02').style.display='none'" 
+        class="w3-button w3-display-topright">&times;</span>
+		  <img id="alert_img1" class="mySlides" src="img/event/chute01_cam1_subclip008_frame008.jpg" style="width:100%">
+		  <img id="alert_img2" class="mySlides" src="img/event/chute01_cam1_subclip008_frame009.jpg" style="width:100%">
+		  <img id="alert_img3" class="mySlides" src="img/event/chute01_cam1_subclip008_frame011.jpg" style="width:100%">
+		  <img id="alert_img4" class="mySlides" src="img/event/chute01_cam1_subclip008_frame012.jpg" style="width:100%">
+		  <img id="alert_img5" class="mySlides" src="img/event/chute01_cam1_subclip008_frame013.jpg" style="width:100%">
+
+		  <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+		  <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+		</div>
+	
+    </div>
+	</div>
+	<!--End slide show as alert-->
+	
+	
+	
+	<!-- section featured -->
+    <section id="featured1">
+    </section>
+
+
+    <footer style="    position: fixed;
+    bottom: 0;
+    width: 100%;">
+    </footer>
+  </div>
+  <a href="#" class="scrollup"><i class="icon-angle-up icon-square icon-bglight icon-2x active"></i></a>
+
+  <!-- javascript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="{% static 'fyp/js/jquery.js' %}"></script>
+  <script src="{% static 'fyp/js/jquery.easing.1.3.js' %}"></script>
+  <script src="{% static 'fyp/js/bootstrap.js' %}"></script>
+
+  <script src="{% static 'fyp/js/modernizr.custom.js' %}"></script>
+  <script src="{% static 'fyp/js/toucheffects.js' %}"></script>
+  <script src="{% static 'fyp/js/google-code-prettify/prettify.js' %}"></script>
+  <script src="{% static 'fyp/js/jquery.bxslider.min.js' %}"></script>
+  <script src="{% static 'fyp/js/camera/camera.js' %}"></script>
+  <script src="{% static 'fyp/js/camera/setting.js' %}"></script>
+
+  <script src="{% static 'fyp/js/jquery.prettyPhoto.js' %}"></script>
+  <script src="{% static 'fyp/js/portfolio/jquery.quicksand.js' %}"></script>
+  <script src="{% static 'fyp/js/portfolio/setting.js' %}"></script>
+
+  <script src="{% static 'fyp/js/jquery.flexslider.js' %}"></script>
+  <script src="{% static 'fyp/js/animate.js' %}"></script>
+  <script src="{% static 'fyp/js/inview.js' %}"></script>
+
+  <!-- Template Custom JavaScript File -->
+  <script src="{% static 'fyp/js/custom.js' %}"></script>
+  <script>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  x[slideIndex-1].style.display = "block";  
+}
+
+function display_details(alertId) {
+  console.log("displaying alert details");
+
+  {% for alert in alerts%}
+    console.log("here");
+    if({{ alert.id }} == alertId) {
+      var image1 =  document.getElementById("alert_img1");
+      image1.src = "{% static 'fyp/img/raw/'|add:alert.snapshotURL1|add:'.jpg' %}";
+       var image1 =  document.getElementById("alert_img2");
+      image1.src = "{% static 'fyp/img/raw/'|add:alert.snapshotURL2|add:'.jpg' %}";
+       var image1 =  document.getElementById("alert_img3");
+      image1.src = "{% static 'fyp/img/raw/'|add:alert.snapshotURL3|add:'.jpg' %}";
+       var image1 =  document.getElementById("alert_img4");
+      image1.src = "{% static 'fyp/img/raw/'|add:alert.snapshotURL4|add:'.jpg' %}";
+       var image1 =  document.getElementById("alert_img5");
+      image1.src = "{% static 'fyp/img/raw/'|add:alert.snapshotURL5|add:'.jpg' %}";
+
+      document.getElementById('id02').style.display='block';
+    }
+      
+  {% endfor %}
+  
+}
+</script>
+
+
+</body>
+</html>
