@@ -1,5 +1,3 @@
-Note
-
 # Deployment.
 - Run the following command at path djangoRest\django_project
 - Default url for the app is 127.0.0.1:8000
@@ -11,9 +9,9 @@ python manage.py runserver
 
 # Integration
 Images needs to be in the following folders before it can be displayed in the UI:
-- Raw image foler path: djangoRest\django_project\fyp\static\fyp\img\raw
-- heatmap folder path: djangoRest\django_project\fyp\static\fyp\img\heatmap
-- crowd graph foler path: djangoRest\django_project\fyp\static\fyp\img\crowd_graph
+- Raw image foler path: `django_project\fyp\static\fyp\img\raw`
+- heatmap folder path: `django_project\fyp\static\fyp\img\heatmap`
+- crowd graph foler path: `django_project\fyp\static\fyp\img\crowd_graph`
 
  3 API calls, refer to the 2 screenshots.
 - displayAlert (to be called when there is an event detected)
