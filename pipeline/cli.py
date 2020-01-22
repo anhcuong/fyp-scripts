@@ -7,12 +7,13 @@ import glob
 from config import (
     raw_frame_folder, openpose_processing_folder, fps,
     sleep_time, frame_prefix, rd, subclip_video_folder, heatmap_folder,
-    cnn_frames_per_prediction, keypoint_folder, stack_frame_folder)
+    cnn_frames_per_prediction, keypoint_folder, stack_frame_folder,
+    crowding_frames_per_prediction)
 from utils import (
     extract_frames_from_stream, generate_heatmap_with_openpose,
     generate_keypoints_with_openpose, raw_video_to_subclip, subclip_to_frame,
     pick_frames_for_prediction)
-from models import run_cnn_model, get_cnn_model, run_crowd_detection_model
+from crowd_model import run_crowd_detection_model
 from process_images import observe_and_process
 
 
@@ -83,6 +84,7 @@ def generate_heatmap_batch(with_keypoints):
 
 
 def predict_in_batch_with_cnn(videos):
+    from cnn_models import run_cnn_model, get_cnn_model
     model = get_cnn_model()
     x = pick_frames_for_prediction(videos)
     for video_frames in x:
@@ -109,6 +111,7 @@ def update_result(prefix, frame, result):
 
 
 def predict_fighting_falling_realtime():
+    from cnn_models import run_cnn_model, get_cnn_model
     model = get_cnn_model()
     start_frame = 1
     f_name = 'raw_{}_rendered.png'

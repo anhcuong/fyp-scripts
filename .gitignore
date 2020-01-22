@@ -9,3 +9,4 @@ subclip_videos/
 .venv
 logs/
 images/
+.vscode/
