@@ -15,8 +15,8 @@ openpose = os.getenv('OPENPOSE', 'C:/Users/Frank/workspaces/openpose/bin/OpenPos
 openpose_model_folder = os.getenv('OPENPOSE_MODEL_FOLDER', 'C:/Users/Frank/workspaces/openpose/models/')
 
 # CNN
-cnn_model_location = os.getenv('CNN_MODEL_LOCATION', os.path.join(cur_dir, 'models', 'hmnn_full_best_weights.hdf5'))
-cnn_model_location = os.getenv('CNN_MODEL_LOCATION', os.path.join(cur_dir, 'models', 'full_model_15012020.h5'))
+# cnn_model_location = os.getenv('CNN_MODEL_LOCATION', os.path.join(cur_dir, 'models', 'hmnn_full_best_weights.hdf5'))
+cnn_model_location = os.getenv('CNN_MODEL_LOCATION', os.path.join(cur_dir, 'models', 'full_model_hhb_19012020.h5'))
 cnn_frames_per_prediction = 5
 
 # Crowding

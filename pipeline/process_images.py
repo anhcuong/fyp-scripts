@@ -20,10 +20,25 @@ HM_FOLDER = heatmap_folder
 KP_FOLDER = keypoint_folder
 TARGET_FOLDER = stack_frame_folder
 
-DEQUE = dict()
-DEQUE[HM_FOLDER] = deque(maxlen=100)
-DEQUE[KP_FOLDER] = deque(maxlen=100)
 
+def resize_and_extract_hhb(raw_path, hm_path, output_path):
+
+    """
+    Read the raw, hm images as grayscale.
+    Use raw image for background subtraction.
+    Stack the images to get HHB representation.
+    """
+    raw_img = cv2.imread(raw_path,0)
+    raw_img = cv2.resize(raw_img, (224,224))
+    hm_img = cv2.imread(hm_path,0)
+    hm_img = cv2.resize(hm_img, (224,224))
+    bg_mask = BG_SUBTRACTOR.apply(raw_img)
+    if (bg_mask == 255).all():
+    	bg_mask -= 255
+    stacked_3ch_img = np.dstack((hm_img, hm_img, bg_mask))
+    print('Saving file to {}'.format(output_path))
+    cv2.imwrite(output_path, stacked_3ch_img)
+    return
 
 def resize_and_extract_hkb(raw_path, hm_path, kp_path, hkb_dir):
 
@@ -69,18 +84,15 @@ def on_created_custom(event):
     """
     folder_updated, file_name = os.path.split(event.src_path)
 
-    if folder_updated not in [HM_FOLDER, KP_FOLDER]:
+    if folder_updated != HM_FOLDER:
+        # Only check the heat map folder
         return
-    folder_check = HM_FOLDER if folder_updated == KP_FOLDER else KP_FOLDER
-    file_check = os.path.join(folder_check, file_name.replace(
-        '_rendered.png', '_keypoints.json').replace('_keypoints.json', '_rendered.png'))
-    print(file_check)
-    while(not os.path.isfile(file_check)):
-        time.sleep(0.5)
-    raw_path = os.path.join(RAW_FOLDER, file_name)
-    hm_path = os.path.join(HM_FOLDER, file_name)
-    kp_path = os.path.join(KP_FOLDER, file_name)
-    resize_and_extract_hkb(raw_path, hm_path, kp_path, TARGET_FOLDER)
+    file_name = file_name.replace('_rendered.png', '')
+        # .replace('_keypoints.json', '')
+    raw_path = os.path.join(RAW_FOLDER, file_name, '.png')
+    hm_path = os.path.join(HM_FOLDER, file_name, '_rendered.png')
+    output_path = os.path.join(TARGET_FOLDER, file_name, '.png')
+    resize_and_extract_hhb(raw_path, hm_path, output_path)
     return
 
 def observe_and_process():

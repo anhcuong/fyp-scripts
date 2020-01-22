@@ -9,6 +9,8 @@ python3 -m .venv
 pip install -r requirements.txt
 ```
 
+- Download [pretrained model](https://drive.google.com/file/d/1ozef9nkD70hV90-KU2RfGU4LlUtAj9Y4/view?usp=sharing) into models/ folder and config the CNN_MODEL_LOCATION/
+
 - Update configuration path (Important!!!). Please refer to `config.py` for list of configurations.
 
 ```bash
