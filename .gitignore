@@ -10,3 +10,4 @@ subclip_videos/
 logs/
 images/
 .vscode/
+web/django_project/fyp/static/fyp/img/

@@ -101,12 +101,12 @@
 	<p class="topcontact" style="font-weight: bold;">Crowd Count</p>
 	</div>
 	</section>
-	
+
 	<!-- end section frames -->
 	<!-- Alert div -->
 	<div id="id01" class="w3-modal" style="display:none;">
     <div class="w3-modal-content w3-animate-top w3-card-4" style="width:40%">
-    <header class="w3-container w3-teal"> 
+    <header class="w3-container w3-teal">
       <h2 style='color: #c5c2d4;padding: 5px 5px;'>Event Detected</h2>
     </header>
     <div class="w3-content w3-display-container" style="padding: 10px 16px 5px 16px;text-align:center;">
@@ -128,7 +128,7 @@
   </div>
 	</div>
 	<!-- End Alert div -->
-    
+
     <!-- /section featured -->
 
     <section id="content">
@@ -182,25 +182,21 @@
     var heatmap_frame_format = '.png';
     var crowd_count_format = '.png';
 
-
-
-
     //Setup event stream channel for events
     var pased_data;
     var es = new ReconnectingEventSource('/events/');
 
     es.addEventListener('message', function (e) {
-        
         parsed_data = JSON.parse(e.data);
         console.log(parsed_data);
-        document.getElementById('alert_img1').src = 'static/fyp/img/raw/' + parsed_data.snapshotURL1 +raw_frame_format;
-        document.getElementById('alert_img2').src = 'static/fyp/img/raw/' + parsed_data.snapshotURL2 +raw_frame_format;
+        document.getElementById('alert_img1').src = 'static/fyp/img/raw_frames/' + parsed_data.snapshotURL1 +raw_frame_format;
+        document.getElementById('alert_img2').src = 'static/fyp/img/raw_frames/' + parsed_data.snapshotURL2 +raw_frame_format;
 
-        document.getElementById('alert_img3').src = 'static/fyp/img/raw/' + parsed_data.snapshotURL3 +raw_frame_format;
+        document.getElementById('alert_img3').src = 'static/fyp/img/raw_frames/' + parsed_data.snapshotURL3 +raw_frame_format;
 
-        document.getElementById('alert_img4').src = 'static/fyp/img/raw/' + parsed_data.snapshotURL4 +raw_frame_format;
+        document.getElementById('alert_img4').src = 'static/fyp/img/raw_frames/' + parsed_data.snapshotURL4 +raw_frame_format;
 
-        document.getElementById('alert_img5').src = 'static/fyp/img/raw/' + parsed_data.snapshotURL5 +raw_frame_format;
+        document.getElementById('alert_img5').src = 'static/fyp/img/raw_frames/' + parsed_data.snapshotURL5 +raw_frame_format;
         document.getElementById("alert_eventType").innerHTML = parsed_data.eventType;
 
         document.getElementById('id01').style.display='block';
@@ -250,7 +246,7 @@
         },
         error: function( jqXhr, textStatus, errorThrown ){
           console.log( errorThrown );
-        }   
+        }
       });
 
     }
@@ -283,9 +279,9 @@
       if (n > x.length) {slideIndex = 1}
       if (n < 1) {slideIndex = x.length}
       for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";  
+        x[i].style.display = "none";
       }
-      x[slideIndex-1].style.display = "block";  
+      x[slideIndex-1].style.display = "block";
     }
   </script>
   {% block script1 %} {% endblock %}

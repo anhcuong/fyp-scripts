@@ -4,7 +4,8 @@ import redis
 
 
 cur_dir = os.getcwd()
-image_dir = os.path.join(cur_dir, 'images')
+default_image_dir = os.path.join(cur_dir, 'images')
+image_dir = os.getenv('IMAGE_DIR', default_image_dir)
 # FFPMEG
 ffmpeg = os.getenv('FFMPEG_LOCATION', 'C:/Users/Frank/workspaces/openpose/ffmpeg/bin/ffmpeg.exe')
 fps = int(os.getenv('FPS', 1))
@@ -30,7 +31,7 @@ openpose_processing_folder = os.getenv('OPENPOSE_PROCESSING_FOLDER', os.path.joi
 heatmap_folder = os.getenv('HEATMAP_FOLDER', os.path.join(image_dir, 'heatmaps'))
 keypoint_folder = os.getenv('KEYPOINT_FOLDER', os.path.join(image_dir, 'keypoints'))
 stack_frame_folder = os.getenv('STACKED_FRAME_FOLDER', os.path.join(image_dir, 'stacked_frames'))
-crowd_folder = os.getenv('CROWD_OUTPUT_FOLDER', os.path.join(image_dir, 'crowd_output'))
+crowd_folder = os.getenv('CROWD_OUTPUT_FOLDER', os.path.join(image_dir, 'crowd_graph'))
 log_folder = os.getenv('LOG_FOLDER', os.path.join(cur_dir, 'logs'))
 frame_prefix = 'raw_'
 
