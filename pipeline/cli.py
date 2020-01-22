@@ -25,9 +25,14 @@ def build_path(folder, idx):
     return os.path.join(folder, '{}{}.png'.format(frame_prefix, idx))
 
 
+def stacking_images_in_progress():
+    val = rd.get('STACKING_IN_PROGRESS')
+    return val != None and int(val) == 1
+
+
 def is_op_in_progress():
     val = rd.get('OPENPOSE_IN_PROGRESS')
-    return int(val) == 1
+    return val != None and int(val) == 1
 
 
 def is_dir_empty(dir_path):
@@ -86,6 +91,10 @@ def generate_heatmap_batch(with_keypoints):
 def predict_in_batch_with_cnn(videos):
     from cnn_models import run_cnn_model, get_cnn_model
     model = get_cnn_model()
+    while(stacking_images_in_progress()):
+        print('Waiting for stacking images process')
+        time.sleep(sleep_time)
+    print('Start prediction!')
     x = pick_frames_for_prediction(videos)
     for video_frames in x:
         total_frames = len(video_frames)
@@ -151,6 +160,7 @@ def reset():
     empty_folder(keypoint_folder)
     empty_folder(subclip_video_folder)
     empty_folder(stack_frame_folder)
+    print('Reset successfully!')
 
 
 if __name__== "__main__":

@@ -11,7 +11,7 @@ from config import (
     openpose, ffmpeg, raw_frame_folder, rtsp_url, openpose_processing_folder,
     heatmap_folder, keypoint_folder, log_folder, fps, frame_prefix,
     video_extension, raw_video_folder, subclip_video_folder,
-    output_type, frame_width, frame_height, subclip_duration, openpose_model_folder)
+    output_type, frame_width, frame_height, subclip_duration, openpose_model_folder, stack_frame_folder)
 
 
 def timeit(method):
@@ -157,8 +157,8 @@ def pick_frames_for_prediction(videos):
     for video_path in videos:
         start_frame = 1
         continue_loop = True
-        frame_prefix = video_path.replace(raw_video_folder, heatmap_folder).replace('.mp4', '').replace('.avi', '')
-        frame_path = "{}-frame-{}_rendered.png"
+        frame_prefix = video_path.replace(raw_video_folder, stack_frame_folder).replace('.mp4', '').replace('.avi', '')
+        frame_path = "{}-frame-{}.png"
         frame = [frame_path.format(frame_prefix, start_frame)]
         while continue_loop:
             last_frame = start_frame + fps - 1

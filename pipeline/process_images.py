@@ -28,13 +28,23 @@ def resize_and_extract_hhb(raw_path, hm_path, output_path):
     Use raw image for background subtraction.
     Stack the images to get HHB representation.
     """
-    raw_img = cv2.imread(raw_path,0)
+    raw_img = cv2.imread(raw_path, 0)
     raw_img = cv2.resize(raw_img, (224,224))
-    hm_img = cv2.imread(hm_path,0)
-    hm_img = cv2.resize(hm_img, (224,224))
+    should_continue = True
+    time.sleep(0.5)
+    while(should_continue):
+        try:
+            hm_img = cv2.imread(hm_path, 0)
+            hm_img = cv2.resize(hm_img, (224,224))
+            should_continue = False
+        except Exception as e:
+            print(e)
+            # Warm up time for openpose to complete the heatmap
+            time.sleep(0.5)
+            should_continue = True
     bg_mask = BG_SUBTRACTOR.apply(raw_img)
     if (bg_mask == 255).all():
-    	bg_mask -= 255
+        bg_mask -= 255
     stacked_3ch_img = np.dstack((hm_img, hm_img, bg_mask))
     print('Saving file to {}'.format(output_path))
     cv2.imwrite(output_path, stacked_3ch_img)
@@ -43,6 +53,7 @@ def resize_and_extract_hhb(raw_path, hm_path, output_path):
 def resize_and_extract_hkb(raw_path, hm_path, kp_path, hkb_dir):
 
     """
+    NOT CURRENT IN USED
     Read the raw, hm and kp images as grayscale.
     Use raw image for background subtraction.
     Stack the images to get HKB representation.
@@ -52,10 +63,10 @@ def resize_and_extract_hkb(raw_path, hm_path, kp_path, hkb_dir):
     raw_img = cv2.imread(raw_path, 0)
     raw_img = cv2.resize(raw_img, (224,224))
 
-    hm_img = cv2.imread(hm_path,0)
+    hm_img = cv2.imread(hm_path, 0)
     hm_img = cv2.resize(hm_img, (224,224))
 
-    kp_img = cv2.imread(kp_path,0)
+    kp_img = cv2.imread(kp_path, 0)
     kp_img = cv2.resize(kp_img, (224,224))
 
     bg_mask = BG_SUBTRACTOR.apply(raw_img)
@@ -70,6 +81,7 @@ def resize_and_extract_hkb(raw_path, hm_path, kp_path, hkb_dir):
     cv2.imwrite(dst_path, stacked_3ch_img)
 
     return
+
 
 def on_created_custom(event):
 
@@ -87,11 +99,13 @@ def on_created_custom(event):
     if folder_updated != HM_FOLDER:
         # Only check the heat map folder
         return
+    # set expire time in redis for 30s
+    rd.set('STACKING_IN_PROGRESS', '1', ex=30)
     file_name = file_name.replace('_rendered.png', '')
         # .replace('_keypoints.json', '')
-    raw_path = os.path.join(RAW_FOLDER, file_name, '.png')
-    hm_path = os.path.join(HM_FOLDER, file_name, '_rendered.png')
-    output_path = os.path.join(TARGET_FOLDER, file_name, '.png')
+    raw_path = os.path.join(RAW_FOLDER, file_name + '.png')
+    hm_path = os.path.join(HM_FOLDER, file_name + '_rendered.png')
+    output_path = os.path.join(TARGET_FOLDER, file_name + '.png')
     resize_and_extract_hhb(raw_path, hm_path, output_path)
     return
 
