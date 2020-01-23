@@ -23,15 +23,6 @@ Images needs to be in the following folders before it can be displayed in the UI
 - displayCrowdCount (to be called to display the crowd count graph)
 ![displayCrowdCount](displayCrowdCount.png "displayCrowdCount")
 
-- Other configurable
-based.html: line 181-183
-
-```js
-e.g.
-    var raw_frame_format = '.jpg';
-    var heatmap_frame_format = '.png';
-    var crowd_count_format = '.png';
-```
 
 # Limitations
 Event is only saved when it's handled, one event can be displayed at one time. If another event happened before current event is handled, current event will be lost.

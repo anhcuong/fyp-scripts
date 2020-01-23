@@ -5,8 +5,8 @@ import redis
 
 cur_dir = os.getcwd()
 default_image_dir = os.path.join(cur_dir, 'images')
-image_dir = os.getenv('IMAGE_DIR', default_image_dir)
-frontend_base_dir = 'C:/Users/Frank/workspaces/fyp-scripts/web/django_project/fyp/'
+# image_dir = os.getenv('IMAGE_DIR', default_image_dir)
+frontend_base_dir = os.getenv('FRONTEND_BASE_DIR', 'C:/Users/Frank/workspaces/fyp-scripts/web/django_project/fyp/')
 image_dir = frontend_base_dir + 'static/fyp/img'
 
 # FFPMEG
@@ -22,6 +22,7 @@ openpose_model_folder = os.getenv('OPENPOSE_MODEL_FOLDER', 'C:/Users/Frank/works
 # cnn_model_location = os.getenv('CNN_MODEL_LOCATION', os.path.join(cur_dir, 'models', 'hmnn_full_best_weights.hdf5'))
 cnn_model_location = os.getenv('CNN_MODEL_LOCATION', os.path.join(cur_dir, 'models', 'full_model_hhb_19012020.h5'))
 cnn_frames_per_prediction = 5
+prediction_threshold = float(os.getenv('CNN_PREDICTION_THRESHOLD', 0.5))
 
 # Crowding
 crowding_frames_per_prediction = 1

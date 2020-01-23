@@ -8,7 +8,7 @@ from config import (
     raw_frame_folder, openpose_processing_folder, fps,
     sleep_time, frame_prefix, rd, subclip_video_folder, heatmap_folder,
     cnn_frames_per_prediction, keypoint_folder, stack_frame_folder,
-    crowding_frames_per_prediction)
+    crowding_frames_per_prediction, prediction_threshold)
 from utils import (
     extract_frames_from_stream, generate_heatmap_with_openpose,
     generate_keypoints_with_openpose, raw_video_to_subclip, subclip_to_frame,
@@ -106,15 +106,20 @@ def predict_in_batch_with_cnn(videos):
             if total_input_frames < cnn_frames_per_prediction:
                 input_frames = input_frames + [input_frames[-1]] * (cnn_frames_per_prediction-total_input_frames)
             rs = run_cnn_model(input_frames, model)
+            falling, fighting = rs
+            if falling >= prediction_threshold:
+                display_alert(input_frames, 'Falling')
+            if fighting >= prediction_threshold:
+                display_alert(input_frames, 'Fighting')
             for frame in input_frames:
-                prediction[frame] = str(rs)
+                prediction[frame] = rs
     return prediction
 
 
 def display_prediction_by_frame(predict):
     for k, v in predict.items():
         time.sleep(1)
-        display_frame(k, v)
+        display_frame(k, str(v))
 
 
 def run_batch_pipeline():

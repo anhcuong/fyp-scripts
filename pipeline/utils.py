@@ -178,7 +178,9 @@ def pick_frames_for_prediction(videos):
 def display_alert(frames, event_type):
     data = {'eventType': event_type}
     for idx, frame in enumerate(frames):
-        data['snapshotURL' + (idx+1)] = frame
+        suffix = idx + 1
+        raw_url = frame.replace(stack_frame_folder, raw_frame_folder).replace(frontend_base_dir, '').replace('static/', '')
+        data['snapshotURL{}'.format(suffix)] = raw_url
     r = requests.post(display_alert_url, json=data)
     print(r.status_code, r.text)
 

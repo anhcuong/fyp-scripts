@@ -117,7 +117,7 @@ tr:nth-child(even) {
               {% for alert in alerts%}
                 <tr>
                   <th>{{ alert.id }}</th>
-                  <th><img src="{% static 'fyp/img/raw/'|add:alert.snapshotURL1|add:'.jpg' %}" width="50" height="60"></th>
+                  <th><img src="{% static alert.snapshotURL1 %}" width="50" height="60"></th>
                   <th>{{ alert.eventType }}</th>
                   <th>{{ alert.timestamp|date:"Y F d, G:i:s" }}</th>
                   <th>{{ alert.handled }}</th>
@@ -130,13 +130,13 @@ tr:nth-child(even) {
         </div>
       </div>
     </section>
-	
+
 	<!-- end section frames -->
 	<!--slide show as alert-->
 	<div id="id02" class="w3-modal" style="display:none;">
     <div class="w3-modal-content w3-animate-top w3-card-4" style="width:40%">
       <div class="w3-content w3-display-container">
-	  <span onclick="document.getElementById('id02').style.display='none'" 
+	  <span onclick="document.getElementById('id02').style.display='none'"
         class="w3-button w3-display-topright">&times;</span>
 		  <img id="alert_img1" class="mySlides" src="img/event/chute01_cam1_subclip008_frame008.jpg" style="width:100%">
 		  <img id="alert_img2" class="mySlides" src="img/event/chute01_cam1_subclip008_frame009.jpg" style="width:100%">
@@ -147,13 +147,13 @@ tr:nth-child(even) {
 		  <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
 		  <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
 		</div>
-	
+
     </div>
 	</div>
 	<!--End slide show as alert-->
-	
-	
-	
+
+
+
 	<!-- section featured -->
     <section id="featured1">
     </section>
@@ -204,9 +204,9 @@ function showDivs(n) {
   if (n > x.length) {slideIndex = 1}
   if (n < 1) {slideIndex = x.length}
   for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";  
+    x[i].style.display = "none";
   }
-  x[slideIndex-1].style.display = "block";  
+  x[slideIndex-1].style.display = "block";
 }
 
 function display_details(alertId) {
@@ -216,21 +216,21 @@ function display_details(alertId) {
     console.log("here");
     if({{ alert.id }} == alertId) {
       var image1 =  document.getElementById("alert_img1");
-      image1.src = "{% static 'fyp/img/raw/'|add:alert.snapshotURL1|add:'.jpg' %}";
+      image1.src = "{% static alert.snapshotURL1 %}";
        var image1 =  document.getElementById("alert_img2");
-      image1.src = "{% static 'fyp/img/raw/'|add:alert.snapshotURL2|add:'.jpg' %}";
+      image1.src = "{% static alert.snapshotURL2 %}";
        var image1 =  document.getElementById("alert_img3");
-      image1.src = "{% static 'fyp/img/raw/'|add:alert.snapshotURL3|add:'.jpg' %}";
+      image1.src = "{% static alert.snapshotURL3 %}";
        var image1 =  document.getElementById("alert_img4");
-      image1.src = "{% static 'fyp/img/raw/'|add:alert.snapshotURL4|add:'.jpg' %}";
+      image1.src = "{% static alert.snapshotURL4 %}";
        var image1 =  document.getElementById("alert_img5");
-      image1.src = "{% static 'fyp/img/raw/'|add:alert.snapshotURL5|add:'.jpg' %}";
+      image1.src = "{% static alert.snapshotURL5 %}";
 
       document.getElementById('id02').style.display='block';
     }
-      
+
   {% endfor %}
-  
+
 }
 </script>
 

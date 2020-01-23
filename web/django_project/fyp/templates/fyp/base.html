@@ -92,7 +92,7 @@
   	</div>
   	<div style = "display:inline-block; width:49.5%;text-align:center; margin-bottom:5%;" id = "frame2">
   	<img src="{% static 'fyp/img/default.png' %}" alt="Raw frames" style="width: 90%; display:block;margin:auto;">
-  	<p class="topcontact" style="font-weight: bold;">Heatmaps</p>
+  	<p class="topcontact" style="font-weight: bold;">`s</p>
   	</div> -->
   {% endblock %}
 
@@ -189,16 +189,12 @@
     es.addEventListener('message', function (e) {
         parsed_data = JSON.parse(e.data);
         console.log(parsed_data);
-        document.getElementById('alert_img1').src = 'static/fyp/img/raw_frames/' + parsed_data.snapshotURL1 +raw_frame_format;
-        document.getElementById('alert_img2').src = 'static/fyp/img/raw_frames/' + parsed_data.snapshotURL2 +raw_frame_format;
-
-        document.getElementById('alert_img3').src = 'static/fyp/img/raw_frames/' + parsed_data.snapshotURL3 +raw_frame_format;
-
-        document.getElementById('alert_img4').src = 'static/fyp/img/raw_frames/' + parsed_data.snapshotURL4 +raw_frame_format;
-
-        document.getElementById('alert_img5').src = 'static/fyp/img/raw_frames/' + parsed_data.snapshotURL5 +raw_frame_format;
+        document.getElementById('alert_img1').src = 'static/' + parsed_data.snapshotURL1;
+        document.getElementById('alert_img2').src = 'static/' + parsed_data.snapshotURL2;
+        document.getElementById('alert_img3').src = 'static/' + parsed_data.snapshotURL3;
+        document.getElementById('alert_img4').src = 'static/' + parsed_data.snapshotURL4;
+        document.getElementById('alert_img5').src = 'static/' + parsed_data.snapshotURL5;
         document.getElementById("alert_eventType").innerHTML = parsed_data.eventType;
-
         document.getElementById('id01').style.display='block';
 
     }, false);

@@ -30,7 +30,7 @@ python manage.py runserver
 - Update configuration path (Important!!!). Please refer to `config.py` for list of configurations.
 
 ```bash
-export IMAGE_DIR="C:\Users\Frank\workspaces\fyp-scripts\web\django_project\fyp\static\fyp\img"
+export FRONTEND_BASE_DIR="C:\Users\Frank\workspaces\fyp-scripts\web\django_project\fyp"
 export OPENPOSE=<Path to OpenPose>
 export FFMPEG=<Path to FFMPEG>
 export RAW_VIDEO_FOLDER=<Path to Raw Video Folder>
