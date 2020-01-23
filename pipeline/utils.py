@@ -7,11 +7,14 @@ import time
 import cv2
 from moviepy.editor import VideoFileClip
 
+import requests
+
 from config import (
     openpose, ffmpeg, raw_frame_folder, rtsp_url, openpose_processing_folder,
     heatmap_folder, keypoint_folder, log_folder, fps, frame_prefix,
     video_extension, raw_video_folder, subclip_video_folder,
-    output_type, frame_width, frame_height, subclip_duration, openpose_model_folder, stack_frame_folder)
+    output_type, frame_width, frame_height, subclip_duration, openpose_model_folder, stack_frame_folder,
+    display_alert_url, display_frame_url)
 
 
 def timeit(method):
@@ -170,3 +173,18 @@ def pick_frames_for_prediction(videos):
             start_frame = last_frame + 1
         frames.append(frame)
     return frames
+
+
+def display_alert(frames, event_type):
+    data = {'eventType': event_type}
+    for idx, frame in enumerate(frames):
+        data['snapshotURL' + (idx+1)] = frame
+    r = requests.post(display_alert_url, json=data)
+    print(r.status_code, r.text)
+
+
+def display_frame(frame, prediction_result):
+    data = {'snapshotURL': frame, 'prediction_result': prediction_result}
+    r = requests.post(display_frame_url, json=data)
+    print(r.status_code, r.text)
+

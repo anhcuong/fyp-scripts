@@ -6,6 +6,7 @@ import redis
 cur_dir = os.getcwd()
 default_image_dir = os.path.join(cur_dir, 'images')
 image_dir = os.getenv('IMAGE_DIR', default_image_dir)
+image_dir = 'C:/Users/Frank/workspaces/fyp-scripts/web\django_project/fyp/static/fyp/img'
 # FFPMEG
 ffmpeg = os.getenv('FFMPEG_LOCATION', 'C:/Users/Frank/workspaces/openpose/ffmpeg/bin/ffmpeg.exe')
 fps = int(os.getenv('FPS', 1))
@@ -49,6 +50,11 @@ output_type = '.mp4'
 frame_width = 640
 frame_height = 480
 subclip_duration = 5
+
+# Backend API config
+backend_url = os.getenv('BACKEND_URL', 'http://127.0.0.1:8000')
+display_frame_url = backend_url + '/displayFrame'
+display_alert_url = backend_url + '/displayAlert'
 
 
 for folder in [

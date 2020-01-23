@@ -12,7 +12,7 @@ from config import (
 from utils import (
     extract_frames_from_stream, generate_heatmap_with_openpose,
     generate_keypoints_with_openpose, raw_video_to_subclip, subclip_to_frame,
-    pick_frames_for_prediction)
+    pick_frames_for_prediction, display_frame, display_alert)
 from crowd_model import run_crowd_detection_model
 from process_images import observe_and_process
 
@@ -96,6 +96,7 @@ def predict_in_batch_with_cnn(videos):
         time.sleep(sleep_time)
     print('Start prediction!')
     x = pick_frames_for_prediction(videos)
+    prediction = {}
     for video_frames in x:
         total_frames = len(video_frames)
         for start in range(total_frames):
@@ -105,14 +106,22 @@ def predict_in_batch_with_cnn(videos):
             if total_input_frames < cnn_frames_per_prediction:
                 input_frames = input_frames + [input_frames[-1]] * (cnn_frames_per_prediction-total_input_frames)
             rs = run_cnn_model(input_frames, model)
-            print('Result for {}: {}'.format(input_frames, rs))
+            for frame in input_frames:
+                prediction[frame] = str(rs)
+    return prediction
+
+
+def display_prediction_by_frame(predict):
+    for k, v in predict:
+        display_frame(k, v)
 
 
 def run_batch_pipeline():
     videos = raw_video_to_subclip()
     subclip_to_frame()
     generate_heatmap_batch(with_keypoints=True)
-    predict_in_batch_with_cnn(videos)
+    predict = predict_in_batch_with_cnn(videos)
+    display_prediction_by_frame(predict)
 
 
 def update_result(prefix, frame, result):
