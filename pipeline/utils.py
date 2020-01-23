@@ -14,7 +14,7 @@ from config import (
     heatmap_folder, keypoint_folder, log_folder, fps, frame_prefix,
     video_extension, raw_video_folder, subclip_video_folder,
     output_type, frame_width, frame_height, subclip_duration, openpose_model_folder, stack_frame_folder,
-    display_alert_url, display_frame_url, frontend_base_dir)
+    display_alert_url, display_frame_url, frontend_base_dir, rd)
 
 
 def timeit(method):
@@ -176,6 +176,7 @@ def pick_frames_for_prediction(videos):
 
 
 def display_alert(frames, event_type):
+    rd.set(event_type + '_detected', '1', ex=5)
     data = {'eventType': event_type}
     for idx, frame in enumerate(frames):
         suffix = idx + 1

@@ -30,6 +30,11 @@ def stacking_images_in_progress():
     return val != None and int(val) == 1
 
 
+def is_the_same_alert(event_type):
+    val = rd.get(event_type + '_detected')
+    return val != None and int(val) == 1
+
+
 def is_op_in_progress():
     val = rd.get('OPENPOSE_IN_PROGRESS')
     return val != None and int(val) == 1
@@ -97,6 +102,7 @@ def predict_in_batch_with_cnn(videos):
     print('Start prediction!')
     x = pick_frames_for_prediction(videos)
     prediction = {}
+    alert = {'fighting': [], 'falling': []}
     for video_frames in x:
         total_frames = len(video_frames)
         for start in range(total_frames):
@@ -108,12 +114,12 @@ def predict_in_batch_with_cnn(videos):
             rs = run_cnn_model(input_frames, model)
             falling, fighting = rs
             if falling >= prediction_threshold:
-                display_alert(input_frames, 'Falling')
+                alert['falling'].append(input_frames)
             if fighting >= prediction_threshold:
-                display_alert(input_frames, 'Fighting')
+                alert['fighting'].append(input_frames)
             for frame in input_frames:
                 prediction[frame] = rs
-    return prediction
+    return prediction, alert
 
 
 def display_prediction_by_frame(predict):
@@ -122,12 +128,22 @@ def display_prediction_by_frame(predict):
         display_frame(k, str(v))
 
 
+def display_alert_to_ui(alert):
+    for frames in alert['fighting']:
+        display_alert(frames, 'fighting')
+        time.sleep(1)
+    for frames in alert['falling']:
+        display_alert(frames, 'falling')
+        time.sleep(1)
+
+
 def run_batch_pipeline():
     videos = raw_video_to_subclip()
     subclip_to_frame()
     generate_heatmap_batch(with_keypoints=True)
-    predict = predict_in_batch_with_cnn(videos)
+    predict, alert = predict_in_batch_with_cnn(videos)
     display_prediction_by_frame(predict)
+    display_alert_to_ui(alert)
 
 
 def update_result(prefix, frame, result):
