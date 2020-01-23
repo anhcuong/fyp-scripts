@@ -99,8 +99,8 @@ def on_created_custom(event):
     if folder_updated != HM_FOLDER:
         # Only check the heat map folder
         return
-    # set expire time in redis for 30s
-    rd.set('STACKING_IN_PROGRESS', '1', ex=30)
+    # set expire time in redis for 10s
+    rd.set('STACKING_IN_PROGRESS', '1', ex=10)
     file_name = file_name.replace('_rendered.png', '')
         # .replace('_keypoints.json', '')
     raw_path = os.path.join(RAW_FOLDER, file_name + '.png')

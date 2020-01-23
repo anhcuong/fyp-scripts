@@ -14,7 +14,7 @@ from config import (
     heatmap_folder, keypoint_folder, log_folder, fps, frame_prefix,
     video_extension, raw_video_folder, subclip_video_folder,
     output_type, frame_width, frame_height, subclip_duration, openpose_model_folder, stack_frame_folder,
-    display_alert_url, display_frame_url)
+    display_alert_url, display_frame_url, frontend_base_dir)
 
 
 def timeit(method):
@@ -184,7 +184,13 @@ def display_alert(frames, event_type):
 
 
 def display_frame(frame, prediction_result):
-    data = {'snapshotURL': frame, 'prediction_result': prediction_result}
+    # use relative path
+    raw_url = frame.replace(stack_frame_folder, raw_frame_folder).replace(frontend_base_dir, '')
+    frame_url = frame.replace(frontend_base_dir, '')
+    data = {
+        'snapshotRawURL': raw_url,
+        'snapshotHeatURL': frame_url,
+        'predictionResult': prediction_result,
+    }
     r = requests.post(display_frame_url, json=data)
     print(r.status_code, r.text)
-

@@ -66,7 +66,9 @@ def displayAlert(request):
 @api_view(['POST'])
 def displayFrame(request):
 	context = {
-		'snapshotURL':request.data["snapshotURL"]
+		'snapshotRawURL':request.data["snapshotRawURL"],
+		'snapshotHeatURL':request.data["snapshotHeatURL"],
+		'predictionResult':request.data["predictionResult"],
 	}
 
 	try:
@@ -90,6 +92,6 @@ def displayCrowdCount(request):
 		return Response(context,  status=status.HTTP_200_OK)
 	except:
 		return Response(context,  status=status.HTTP_400_BAD_REQUEST)
-	
+
 
 

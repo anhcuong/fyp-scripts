@@ -21,9 +21,9 @@
   es1.addEventListener('message', function (e) {
       parsed = JSON.parse(e.data);
       console.log(parsed);
-      document.getElementById('raw_snapshot').src = 'static/fyp/img/raw_frames/' + parsed.snapshotURL +'.jpg';
-      document.getElementById('heat_snapshot').src = 'static/fyp/img/heatmaps/' + parsed.snapshotURL +'.png';
-      document.getElementById('prediction_result').innerHTML = parsed.prediction_result;
+      document.getElementById('raw_snapshot').src = parsed.snapshotRawURL + "#t=" + new Date().getTime();
+      document.getElementById('heat_snapshot').src = parsed.snapshotHeatURL + "#t=" + new Date().getTime();
+      document.getElementById('prediction_result').innerHTML = parsed.predictionResult;
 
   }, false);
 
