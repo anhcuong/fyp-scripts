@@ -3,8 +3,8 @@ import numpy as np
 import re
 import time
 import os
-
 from collections import deque
+
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 

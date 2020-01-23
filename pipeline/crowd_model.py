@@ -1,6 +1,11 @@
 import os
 import math
+import time
+from collections import deque
+import json
 
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -13,18 +18,27 @@ def get_json_len(path):
     """
     Faster way to get number of people than pd.read_json()
     """
-    with open(path, 'rb') as handle:
-        json_file = json.load(handle)
-        persons_detected= json['people']
+    should_continue = True
+    time.sleep(0.5)
+    while(should_continue):
+        try:
+            with open(path) as f:
+                json_file = json.load(f)
+                persons_detected= json_file['people']
 
-        conf_list = []
-        for ind, person in enumerate(persons_detected):
-            confidence = persons_detected[ind].get('pose_keypoints_2d')[2::3]
-            avg_conf = np.mean(confidence)
-            if avg_conf > 0.05:
-                conf_list.append(avg_conf)
-        counts = len(conf_list)
-    return counts
+                conf_list = []
+                for ind, person in enumerate(persons_detected):
+                    confidence = persons_detected[ind].get('pose_keypoints_2d')[2::3]
+                    avg_conf = np.mean(confidence)
+                    if avg_conf > 0.05:
+                        conf_list.append(avg_conf)
+                counts = len(conf_list)
+            return counts
+        except Exception as e:
+            print(e)
+            # Warm up time for openpose to complete the heatmap
+            time.sleep(0.5)
+            should_continue = True
 
 
 def calculate_ucl(pax_deque):
@@ -71,7 +85,7 @@ def run_scenario_and_plot_sudden_crowd(sample_scenario, path):
     # initialize list to store detected abnormal timestamp
     abnormal_crowd_timestamp = []
     ucl_timestamp = []
-
+    ucl = 0
     for index, sample in enumerate(sample_scenario):
         # skip the calculations for first sample
         if len(pax_count_past_2_mins) < pax_hist:
@@ -99,30 +113,16 @@ def run_scenario_and_plot_sudden_crowd(sample_scenario, path):
     return abnormal_crowd_timestamp
 
 
-def run_crowd_detection_model(file_path):
-    # Actual deployment will be something like this
-    # define a global deque
-    pax_count_graph = deque(maxlen=500)
-    pax_count_deque = deque(maxlen=120)
-    # control loop handled by Frank's pipeline, run the following everytime new json is generated
-    new_pax_count = get_json_len(file_path)
-    crowd_flag = is_crowd(new_pax_count, pax_count_deque)
-    pax_count_deque.append(new_pax_count)
-    pax_count_graph.append(new_pax_count)
-    run_scenario_and_plot_sudden_crowd(pax_count_graph, crowd_folder)
-
-
 pax_count_graph = deque(maxlen=500)
 pax_count_deque = deque(maxlen=120)
 
 
 def on_created_custom(event):
     folder_updated, file_name = os.path.split(event.src_path)
-
     if folder_updated != keypoint_folder:
         # Only check the heat map folder
         return
-    new_pax_count = get_json_len(file_name)
+    new_pax_count = get_json_len(event.src_path)
     crowd_flag = is_crowd(new_pax_count, pax_count_deque)
     pax_count_deque.append(new_pax_count)
     pax_count_graph.append(new_pax_count)

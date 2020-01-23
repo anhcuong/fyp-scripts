@@ -94,6 +94,10 @@ def list_files_in_folder(dir_path, extension):
 def raw_video_to_subclip(debug=False):
     print('Split raw video into subclips')
     videos = list_files_in_folder(raw_video_folder, video_extension)
+    for video in videos:
+        os.rename(video, video.replace(' ', '-'))
+    videos = list_files_in_folder(raw_video_folder, video_extension)
+
     if debug:
         return videos
 
@@ -152,6 +156,7 @@ def subclip_to_frame():
             success = getFrame(sec)
 
     for f_path in videos:
+        print(videos)
         video_to_frame(f_path)
 
 
@@ -180,7 +185,8 @@ def display_alert(frames, event_type):
     data = {'eventType': event_type}
     for idx, frame in enumerate(frames):
         suffix = idx + 1
-        raw_url = frame.replace(stack_frame_folder, raw_frame_folder).replace(frontend_base_dir, '').replace('static/', '')
+        raw_url = frame.replace(subclip_video_folder, raw_frame_folder).replace(
+            stack_frame_folder, raw_frame_folder).replace(frontend_base_dir, '').replace('static/', '')
         data['snapshotURL{}'.format(suffix)] = raw_url
     r = requests.post(display_alert_url, json=data)
     print(r.status_code, r.text)
@@ -188,8 +194,9 @@ def display_alert(frames, event_type):
 
 def display_frame(frame, prediction_result):
     # use relative path
-    raw_url = frame.replace(stack_frame_folder, raw_frame_folder).replace(frontend_base_dir, '')
-    frame_url = frame.replace(frontend_base_dir, '')
+    raw_url = frame.replace(subclip_video_folder, raw_frame_folder).replace(
+        stack_frame_folder, raw_frame_folder).replace(frontend_base_dir, '')
+    frame_url = frame.replace(subclip_video_folder, stack_frame_folder).replace(frontend_base_dir, '')
     data = {
         'snapshotRawURL': raw_url,
         'snapshotHeatURL': frame_url,
