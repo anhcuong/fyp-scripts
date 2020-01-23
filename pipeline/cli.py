@@ -13,8 +13,8 @@ from utils import (
     extract_frames_from_stream, generate_heatmap_with_openpose,
     generate_keypoints_with_openpose, raw_video_to_subclip, subclip_to_frame,
     pick_frames_for_prediction, display_frame, display_alert)
-from crowd_model import run_crowd_detection_model
-from process_images import observe_and_process
+from crowd_model import observe_and_process as crowding_observe_and_process
+from process_images import observe_and_process as prepare_image_observe_and_process
 
 
 FIGHTING_FALLING_FRAME_RS_PREFIX = 'fighting_falling_'
@@ -112,7 +112,7 @@ def predict_in_batch_with_cnn(videos):
             if total_input_frames < cnn_frames_per_prediction:
                 input_frames = input_frames + [input_frames[-1]] * (cnn_frames_per_prediction-total_input_frames)
             rs = run_cnn_model(input_frames, model)
-            falling, fighting = rs
+            fighting, falling = rs
             if falling >= prediction_threshold:
                 alert['falling'].append(input_frames)
             if fighting >= prediction_threshold:
@@ -167,22 +167,12 @@ def predict_fighting_falling_realtime():
         start_frame = end_frame
 
 
-def predict_crowding_realtime():
-    start_frame = 1
-    f_name = 'raw_{}_rendered.json'
-    while True:
-        end_frame = start_frame + crowding_frames_per_prediction*fps
-        for i in range(start_frame, end_frame, fps):
-            f = os.path.join(keypoint_folder, f_name.format(i))
-            while(not os.path.isfile(f)):
-                time.sleep(sleep_time)
-            rs = run_crowd_detection_model(f)
-            # update_result(CROWD_FRAME_RS_PREFIX, i, rs)
-        start_frame = end_frame
-
-
 def run_process_images():
-    observe_and_process()
+    prepare_image_observe_and_process()
+
+
+def run_crowding_model():
+    crowding_observe_and_process()
 
 
 def reset():
@@ -206,8 +196,8 @@ if __name__== "__main__":
         generate_heatmap_realtime(with_keypoint=True)
     elif arg == 'predict_fighting_falling_realtime':
         predict_fighting_falling_realtime()
-    elif arg == 'predict_crowding_realtime':
-        predict_crowding_realtime()
+    elif arg == 'predict_crowding':
+        run_crowding_model()
     elif arg == 'run_batch_pipeline':
         run_batch_pipeline()
     elif arg == 'process_images':

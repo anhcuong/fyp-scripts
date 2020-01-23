@@ -5,7 +5,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from config import cnn_model_location, crowd_folder
+from config import (
+    cnn_model_location, crowd_folder, keypoint_folder, image_dir)
 
 
 def get_json_len(path):
@@ -95,9 +96,7 @@ def run_scenario_and_plot_sudden_crowd(sample_scenario, path):
     plt.ylim(0, ucl*2)
     plt.show()
     plt.savefig(path)
-    # if flag:
-    #     return abnormal_crowd_timestamp
-    print(abnormal_crowd_timestamp)
+    return abnormal_crowd_timestamp
 
 
 def run_crowd_detection_model(file_path):
@@ -111,3 +110,40 @@ def run_crowd_detection_model(file_path):
     pax_count_deque.append(new_pax_count)
     pax_count_graph.append(new_pax_count)
     run_scenario_and_plot_sudden_crowd(pax_count_graph, crowd_folder)
+
+
+pax_count_graph = deque(maxlen=500)
+pax_count_deque = deque(maxlen=120)
+
+
+def on_created_custom(event):
+    folder_updated, file_name = os.path.split(event.src_path)
+
+    if folder_updated != keypoint_folder:
+        # Only check the heat map folder
+        return
+    new_pax_count = get_json_len(file_name)
+    crowd_flag = is_crowd(new_pax_count, pax_count_deque)
+    pax_count_deque.append(new_pax_count)
+    pax_count_graph.append(new_pax_count)
+    run_scenario_and_plot_sudden_crowd(pax_count_graph, crowd_folder)
+    return
+
+def observe_and_process():
+
+    '''
+    Whenever a new folder is created in the observed folder, trigger the event_handler
+    (function : on_created_custom)
+    '''
+
+    observer = Observer()
+    event_handler = FileSystemEventHandler()
+    event_handler.on_created = on_created_custom
+    observer.schedule(event_handler, image_dir, recursive=True)
+    observer.start()
+
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        observer.stop()

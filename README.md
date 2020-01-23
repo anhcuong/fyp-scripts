@@ -48,6 +48,7 @@ docker run -d -p 6379:6379 redis
 ```bash
 cd pipeline/
 python cli.py process_images
+python cli.py predict_crowding
 python cli.py run_batch_pipeline
 ```
 
@@ -67,7 +68,7 @@ python cli.py process_imagess
 # Predict fighting and falling
 python cli.py predict_fighting_falling_realtime
 # Predict crowding
-python cli.py predict_crowding_realtime
+python cli.py predict_crowding
 ```
 
 - Reset workspace
