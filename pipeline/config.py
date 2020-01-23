@@ -6,8 +6,8 @@ import redis
 cur_dir = os.getcwd()
 default_image_dir = os.path.join(cur_dir, 'images')
 image_dir = os.getenv('IMAGE_DIR', default_image_dir)
-frontend_base_dir = 'C:/Users/Frank/workspaces/fyp-scripts/web/django_project/'
-image_dir = frontend_base_dir + 'fyp/static/fyp/img'
+frontend_base_dir = 'C:/Users/Frank/workspaces/fyp-scripts/web/django_project/fyp/'
+image_dir = frontend_base_dir + 'static/fyp/img'
 
 # FFPMEG
 ffmpeg = os.getenv('FFMPEG_LOCATION', 'C:/Users/Frank/workspaces/openpose/ffmpeg/bin/ffmpeg.exe')
