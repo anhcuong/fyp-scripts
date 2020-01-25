@@ -11,3 +11,4 @@ logs/
 images/
 .vscode/
 web/django_project/fyp/static/fyp/img/
+web/django_project/db.sqlite3
