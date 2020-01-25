@@ -125,7 +125,7 @@ def predict_in_batch_with_cnn(videos):
 def display_prediction_by_frame(predict):
     for k, v in predict.items():
         time.sleep(1)
-        display_frame(k, str(v))
+        display_frame(k, v)
 
 
 def display_alert_to_ui(alert):

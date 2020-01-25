@@ -197,10 +197,12 @@ def display_frame(frame, prediction_result):
     raw_url = frame.replace(subclip_video_folder, raw_frame_folder).replace(
         stack_frame_folder, raw_frame_folder).replace(frontend_base_dir, '')
     frame_url = frame.replace(subclip_video_folder, stack_frame_folder).replace(frontend_base_dir, '')
+    fighting, falling = prediction_result
     data = {
         'snapshotRawURL': raw_url,
         'snapshotHeatURL': frame_url,
-        'predictionResult': prediction_result,
+        'fallingAccuracy': float(falling),
+        'fightingAccuracy': float(fighting)
     }
     r = requests.post(display_frame_url, json=data)
     print(r.status_code, r.text)

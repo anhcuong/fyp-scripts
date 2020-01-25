@@ -13,11 +13,6 @@ pip install -r requirements.txt
 
 # GUI
 
-Images needs to be in the following folders before it can be displayed in the UI:
-- Raw image foler path: `web\django_project\fyp\static\fyp\img\raw`
-- heatmap folder path: `web\django_project\fyp\static\fyp\img\heatmap`
-- crowd graph foler path: `web\django_project\fyp\static\fyp\img\crowd_graph`
-
 ```bash
 cd web/django_project/
 python manage.py runserver

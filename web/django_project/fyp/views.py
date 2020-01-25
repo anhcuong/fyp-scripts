@@ -68,7 +68,8 @@ def displayFrame(request):
 	context = {
 		'snapshotRawURL':request.data["snapshotRawURL"],
 		'snapshotHeatURL':request.data["snapshotHeatURL"],
-		'predictionResult':request.data["predictionResult"],
+		'fallingAccuracy': request.data["fallingAccuracy"],
+		'fightingAccuracy': request.data["fightingAccuracy"]
 	}
 
 	try:
