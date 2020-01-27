@@ -87,6 +87,8 @@ def run_scenario_and_plot_sudden_crowd(path):
     Function to run simulation on sample scenario.
     Output : plot of number of pax vs timestamp, with red dotted lines indicating detected abnormal crowds
     """
+    print(len(pax_count_past_2_mins))
+    print(len(pax_count_deque))
     if len(pax_count_past_2_mins) < pax_hist:
         return
     # initialize list to store detected abnormal timestamp

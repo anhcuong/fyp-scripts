@@ -167,7 +167,7 @@ def pick_frames_for_prediction(videos):
     for video_path in videos:
         start_frame = 1
         continue_loop = True
-        frame_prefix = video_path.replace(raw_video_folder, stack_frame_folder).replace('.mp4', '').replace('.avi', '')
+        frame_prefix = video_path.replace(subclip_video_folder, stack_frame_folder).replace(raw_video_folder, stack_frame_folder).replace('.mp4', '').replace('.avi', '')
         frame_path = "{}-frame-{}.png"
         frame = [frame_path.format(frame_prefix, start_frame)]
         while continue_loop:
