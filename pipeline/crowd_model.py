@@ -125,7 +125,7 @@ def on_created_custom(event):
     pax_count_graph.append(new_pax_count)
     crowd_path = os.path.join(crowd_folder, '1.png')
     run_scenario_and_plot_sudden_crowd(crowd_path)
-    display_crowd(path, str(crowd_flag))
+    display_crowd(crowd_path, str(crowd_flag))
     return
 
 def observe_and_process():

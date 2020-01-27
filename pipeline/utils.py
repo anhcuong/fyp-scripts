@@ -104,6 +104,7 @@ def raw_video_to_subclip(debug=False):
     def subclip(f_path):
         full_video = VideoFileClip(f_path)
         duration = full_video.duration
+        print(duration)
         clip_start = 0
         idx = 0
         video_name, _ = Path(f_path).name.split('.')
@@ -114,27 +115,28 @@ def raw_video_to_subclip(debug=False):
                 clip_end = duration
             clip = full_video.subclip(clip_start, clip_end)
             name = "{}/{}-{}.mp4".format(subclip_video_folder, video_name, idx)
-            print(name)
             try:
                 clip.write_videofile(name, codec="libx264", temp_audiofile='temp-audio.m4a', remove_temp=True, audio_codec='aac')
-            except:
+            except Exception as e:
+                print(e)
                 clip_start = clip_end
                 continue
             idx += 1
             clip_start = clip_end
             clips.append(name)
+        print(clips)
         return clips
     clips = []
     for v in videos:
         clips += subclip(v)
-    return videos
+    return clips
 
 
 @timeit
 def subclip_to_frame():
     print('Export subclips into frames')
     frame_rate = float(1.0/float(fps))
-    videos = list_files_in_folder(raw_video_folder, video_extension)
+    videos = list_files_in_folder(subclip_video_folder, video_extension)
 
     def video_to_frame(f_path):
         vidcap = cv2.VideoCapture(f_path)
@@ -144,7 +146,8 @@ def subclip_to_frame():
             hasFrames, image = vidcap.read()
             if hasFrames:
                 # save frame as PNG file
-                cv2.imwrite("{}/{}-frame-{}.png".format(raw_frame_folder, video_name, count), image)
+                f_name = "{}/{}-frame-{}.png".format(raw_frame_folder, video_name, count)
+                cv2.imwrite(f_name, image)
             return hasFrames
         sec = 0
         count=1
@@ -156,7 +159,6 @@ def subclip_to_frame():
             success = getFrame(sec)
 
     for f_path in videos:
-        print(videos)
         video_to_frame(f_path)
 
 
@@ -210,6 +212,7 @@ def display_frame(frame, prediction_result):
 
 def display_crowd(path, crowd_flag):
     # use relative path
+    path = path.replace(frontend_base_dir, '')
     print(path)
     data = {
         'snapshotURL': path,
