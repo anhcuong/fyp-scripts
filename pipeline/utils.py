@@ -14,7 +14,7 @@ from config import (
     heatmap_folder, keypoint_folder, log_folder, fps, frame_prefix,
     video_extension, raw_video_folder, subclip_video_folder,
     output_type, frame_width, frame_height, subclip_duration, openpose_model_folder, stack_frame_folder,
-    display_alert_url, display_frame_url, frontend_base_dir, rd)
+    display_alert_url, display_frame_url, frontend_base_dir, rd, display_crowd_url)
 
 
 def timeit(method):
@@ -205,4 +205,15 @@ def display_frame(frame, prediction_result):
         'fightingAccuracy': float(fighting)
     }
     r = requests.post(display_frame_url, json=data)
+    print(r.status_code, r.text)
+
+
+def display_crowd(path, crowd_flag):
+    # use relative path
+    print(path)
+    data = {
+        'snapshotURL': path,
+        'crowdFlag': crowd_flag
+    }
+    r = requests.post(display_crowd_url, json=data)
     print(r.status_code, r.text)

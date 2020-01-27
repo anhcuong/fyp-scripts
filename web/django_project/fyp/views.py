@@ -83,7 +83,8 @@ def displayFrame(request):
 @api_view(['POST'])
 def displayCrowdCount(request):
 	context = {
-		'snapshotURL':request.data["snapshotURL"]
+		'snapshotURL':request.data["snapshotURL"],
+		'crowdFlag': request.data['crowdFlag']
 	}
 
 	try:

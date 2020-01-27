@@ -58,7 +58,7 @@ subclip_duration = 5
 backend_url = os.getenv('BACKEND_URL', 'http://127.0.0.1:8000')
 display_frame_url = backend_url + '/displayFrame'
 display_alert_url = backend_url + '/displayAlert'
-
+display_crowd_url = backend_url + '/displayCrowdCount'
 
 for folder in [
         image_dir, subclip_video_folder, raw_frame_folder,

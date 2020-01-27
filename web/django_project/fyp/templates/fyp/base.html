@@ -253,7 +253,7 @@
     es2.addEventListener('message', function (e) {
         parsed = JSON.parse(e.data);
         console.log(parsed);
-        document.getElementById('crowd_count').src = 'static/fyp/img/crowd_graph/' + parsed.snapshotURL +crowd_count_format;
+        document.getElementById('crowd_count').src = parsed.snapshotURL;
 
     }, false);
 
