@@ -76,10 +76,9 @@ def is_crowd(new_pax_count, pax_deque, lookback=3):
         return False, calculate_ucl(pax_deque)
 
 
-pax_hist = 120
+pax_hist = 10
 pax_count_graph = deque(maxlen=500)
-pax_count_deque = deque(maxlen=pax_hist)
-pax_count_past_2_mins = deque(maxlen=pax_hist)
+pax_count_deque = deque(maxlen=500)
 
 
 def run_scenario_and_plot_sudden_crowd(path):
@@ -87,20 +86,17 @@ def run_scenario_and_plot_sudden_crowd(path):
     Function to run simulation on sample scenario.
     Output : plot of number of pax vs timestamp, with red dotted lines indicating detected abnormal crowds
     """
-    print(len(pax_count_past_2_mins))
-    print(len(pax_count_deque))
-    if len(pax_count_past_2_mins) < pax_hist:
+    if len(pax_count_deque) < pax_hist:
         return
     # initialize list to store detected abnormal timestamp
     abnormal_crowd_timestamp = []
     ucl_timestamp = []
     ucl = 0
     for index, sample in enumerate(pax_count_deque):
-        flag, ucl = is_crowd(sample, pax_count_past_2_mins)
+        flag, ucl = is_crowd(sample, list(pax_count_deque)[-pax_hist:])
         ucl_timestamp.append([index, ucl])
         if flag:
             abnormal_crowd_timestamp.append(index)
-        pax_count_past_2_mins.append(sample)
     # plot the scenarios and detected abnormal crowd
     plt.figure(figsize=(20, 8))
     plt.plot(pax_count_deque, label='Person Count')
