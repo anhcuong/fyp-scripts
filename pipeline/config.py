@@ -13,7 +13,7 @@ image_dir = frontend_base_dir + 'static/fyp/img'
 ffmpeg = os.getenv('FFMPEG_LOCATION', 'C:/Users/Frank/workspaces/openpose/ffmpeg/bin/ffmpeg.exe')
 fps = int(os.getenv('FPS', 1))
 sleep_time = int(os.getenv('SLEEP_TIME', 1))
-rtsp_url = os.getenv('RTSP_URL', 'rtsp://192.168.1.10')
+rtsp_url = os.getenv('RTSP_URL', 'rtsp://192.168.1.6')
 # Openpose
 openpose = os.getenv('OPENPOSE', 'C:/Users/Frank/workspaces/openpose/bin/OpenPoseDemo.exe')
 openpose_model_folder = os.getenv('OPENPOSE_MODEL_FOLDER', 'C:/Users/Frank/workspaces/openpose/models/')

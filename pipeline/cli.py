@@ -154,12 +154,13 @@ def predict_fighting_falling_realtime():
     from cnn_models import run_cnn_model, get_cnn_model
     model = get_cnn_model()
     start_frame = 1
-    f_name = 'raw_{}_rendered.png'
+    f_name = 'raw_{}.png'
     while True:
         end_frame = start_frame + cnn_frames_per_prediction*fps
         input_frames = []
         for i in range(start_frame, end_frame, fps):
-            input_frames.append(os.path.join(heatmap_folder, f_name.format(i)))
+            input_frames.append(os.path.join(stack_frame_folder, f_name.format(i)))
+            print(input_frames)
         while(not os.path.isfile(input_frames[-1])):
             time.sleep(sleep_time)
         rs = run_cnn_model(input_frames, model)
