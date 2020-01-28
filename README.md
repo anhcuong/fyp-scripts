@@ -42,34 +42,40 @@ docker run -d -p 6379:6379 redis
 
 ```bash
 cd pipeline/
+# Run in 1st terminal
 python cli.py process_images
+# Run in 2nd terminal
 python cli.py predict_crowding
+# Run in 3rd terminal
 python cli.py run_batch_pipeline
 ```
 
 - Run real-time stream
 
+Open Live Reporter App in Android or Ios
+
+Update config.py with rtsp stream showed on the App
+
 
 ```bash
 cd pipeline/
-
+# Run in 1st terminal
 python cli.py copy_raw_processings
-python cli.py extract_frames_from_stream
-python cli.py generate_heatmap_realtime
-# Or with keypoints
+# Run in 2nd terminal
 python cli.py generate_heatmap_with_keypoints_realtime
-# Stack images
+# Run in 3rd terminal: Stack images
 python cli.py process_imagess
-# Predict fighting and falling
+# Run in 4th terminal: Predict fighting and falling
 python cli.py predict_fighting_falling_realtime
-# Predict crowding
+# Run in 5th terminal: Predict crowding
 python cli.py predict_crowding
+# RUN THIS LAST in 6th terminal!!!
+python cli.py extract_frames_from_stream
 ```
 
 - Reset workspace
 
 ```bash
 cd pipeline/
-
 python cli.py reset
 ```

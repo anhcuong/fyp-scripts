@@ -158,13 +158,20 @@ def predict_fighting_falling_realtime():
     while True:
         end_frame = start_frame + cnn_frames_per_prediction*fps
         input_frames = []
+        alert = {'fighting': [], 'falling': []}
         for i in range(start_frame, end_frame, fps):
             input_frames.append(os.path.join(stack_frame_folder, f_name.format(i)))
-            print(input_frames)
         while(not os.path.isfile(input_frames[-1])):
             time.sleep(sleep_time)
         rs = run_cnn_model(input_frames, model)
-        update_result(FIGHTING_FALLING_FRAME_RS_PREFIX, start_frame, rs)
+        fighting, falling = rs
+        if falling >= prediction_threshold:
+            alert['falling'].append(input_frames)
+        if fighting >= prediction_threshold:
+            alert['fighting'].append(input_frames)
+        for frame in input_frames:
+            display_frame(frame, rs)
+        display_alert_to_ui(alert)
         start_frame = end_frame
 
 
