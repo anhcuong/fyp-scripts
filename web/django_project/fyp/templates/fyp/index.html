@@ -1,14 +1,13 @@
 {% extends "fyp/base.html" %}
 {% load static %}
 {% block content1 %}
-<h4>Fighting Result: <div id="fighting_accuracy">None.</div> Falling Result: <div id="falling_accuracy">None</div></h4>
-<h4>Crowd Flag: <div id="crowd_flag">None.</div></h4>
+<h4><div id="fighting_accuracy">Fighting: None.</div><div id="falling_accuracy">Falling: None</div><div id="crowd_flag">Crowding: None</div></h4>
 <div style = "display:inline-block; width:49.5%;text-align:center; margin-bottom:5%;" id = "frame1">
-  <img id = "raw_snapshot" src="{% static 'fyp/img/default.png' %}" style="width: 90%; display:block;margin:auto;">
+  <img id = "raw_snapshot" src="{% static 'fyp/img/default.png' %}" style="display:block;margin:auto; height: 400px; width: 668px; object-fit: cover;">
   <p class="topcontact" style="font-weight: bold; ">Raw Frames</p>
 </div>
 <div style = "display:inline-block; width:49.5%;text-align:center; margin-bottom:5%;" id = "frame2">
-  <img id = "heat_snapshot" src="{% static 'fyp/img/default.png' %}" alt="Raw frames" style="width: 90%; display:block;margin:auto;">
+  <img id = "heat_snapshot" src="{% static 'fyp/img/default.png' %}" alt="Raw frames" style="display:block;margin:auto; height: 400px; width: 668px; object-fit: cover;">
   <p class="topcontact" style="font-weight: bold;">Heatmaps</p>
 </div>
 
@@ -24,8 +23,8 @@
       console.log(parsed);
       document.getElementById('raw_snapshot').src = parsed.snapshotRawURL + "#t=" + new Date().getTime();
       document.getElementById('heat_snapshot').src = parsed.snapshotHeatURL + "#t=" + new Date().getTime();
-      document.getElementById('fighting_accuracy').innerHTML = parsed.fightingAccuracy;
-      document.getElementById('falling_accuracy').innerHTML = parsed.fallingAccuracy;
+      document.getElementById('fighting_accuracy').innerHTML = "Fighting: " + parsed.fightingAccuracy;
+      document.getElementById('falling_accuracy').innerHTML = "Falling: " + parsed.fallingAccuracy;
 
   }, false);
 

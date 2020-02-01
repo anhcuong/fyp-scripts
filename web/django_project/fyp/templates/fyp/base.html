@@ -254,7 +254,7 @@
         parsed = JSON.parse(e.data);
         console.log(parsed);
         document.getElementById('crowd_count').src = parsed.snapshotURL  + "#t=" + new Date().getTime();
-        document.getElementById('crowd_flag').innerHTML = parsed.crowdFlag;
+        document.getElementById('crowd_flag').innerHTML = "Crowding: " + parsed.crowdFlag;
 
     }, false);
 
