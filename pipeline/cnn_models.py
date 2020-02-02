@@ -12,6 +12,7 @@ from keras.backend.tensorflow_backend import set_session
 from sklearn.metrics import roc_auc_score
 
 from config import cnn_model_location, crowd_folder
+import time
 
 tf_config =  tf.ConfigProto()
 tf_config.gpu_options.allow_growth = True
