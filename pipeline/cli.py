@@ -161,26 +161,18 @@ def predict_fighting_falling_realtime():
         alert = {'fighting': [], 'falling': []}
         for i in range(start_frame, end_frame, fps):
             input_frames.append(os.path.join(stack_frame_folder, f_name.format(i)))
-        retry = 0
-        run_prediction = True
         while(not os.path.isfile(input_frames[-1])):
-            if retry >= 50:
-                print('Skip prediction for this set')
-                run_prediction = False
-                break
             print('Wait for {}'.format(input_frames[-1]))
             time.sleep(sleep_time)
-            retry = retry + 1
-        if run_prediction:
-            rs = run_cnn_model(input_frames, model)
-            fighting, falling = rs
-            if falling >= prediction_threshold:
-                alert['falling'].append(input_frames)
-            if fighting >= prediction_threshold:
-                alert['fighting'].append(input_frames)
-            for frame in input_frames:
-                display_frame(frame, rs)
-            display_alert_to_ui(alert)
+        rs = run_cnn_model(input_frames, model)
+        fighting, falling = rs
+        if falling >= prediction_threshold:
+            alert['falling'].append(input_frames)
+        if fighting >= prediction_threshold:
+            alert['fighting'].append(input_frames)
+        for frame in input_frames:
+            display_frame(frame, rs)
+        display_alert_to_ui(alert)
         start_frame = end_frame
 
 

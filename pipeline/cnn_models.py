@@ -55,11 +55,17 @@ def run_cnn_model(frame_paths, model):
     '''
     assert len(frame_paths) == 5, "Check and ensure the length of frame path list is 5."
     img_seq = np.zeros(shape=(5,224,224,3))
-    for i, path in enumerate(frame_paths):
-        img = cv2.imread(path)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        img_seq[i] = img
-    img_seq /= 255
-    results = model.predict(np.expand_dims(img_seq, axis=0), batch_size=1)
-    assert results.shape == (1,2), "Incorrect output shape, check model"
-    return results[0]
+    retry = 0
+    while retry < 20:
+        try:
+            for i, path in enumerate(frame_paths):
+                img = cv2.imread(path)
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+                img_seq[i] = img
+            img_seq /= 255
+            results = model.predict(np.expand_dims(img_seq, axis=0), batch_size=1)
+            assert results.shape == (1,2), "Incorrect output shape, check model"
+            return results[0]
+        except:
+            time.sleep(0.5)
+            retry = retry + 1
