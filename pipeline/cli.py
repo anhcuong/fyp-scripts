@@ -172,6 +172,7 @@ def predict_fighting_falling_realtime():
             alert['fighting'].append(input_frames)
         for frame in input_frames:
             display_frame(frame, rs)
+            time.sleep(1)
         display_alert_to_ui(alert)
         start_frame = end_frame
 
